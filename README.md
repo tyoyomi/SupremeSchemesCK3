@@ -1,10 +1,12 @@
-# Supreme Schemes
+﻿# Supreme Schemes
 
-Crusader Kings III intrigue mod. Version 0.1.1. Supported game version 1.20.*.
+Crusader Kings III intrigue mod. Version 0.1.2. Supported game version 1.20.*.
 
 Embrace the Supreme Schemer trait for days-scale plots, near-guaranteed success at High intensity, plus hostile schemes to steal artifacts and titles through intrigue (not war).
 
 Player Supreme Sovereigns (with Supreme Sovereign loaded) can also **Demand Strong Hook** on any living character — auto-accept, no cooldown, grants a strong favor hook toward you.
+
+Player Supreme Schemers and/or Supreme Sovereigns also bypass strong-hook spend cooldowns and Fabricate Hook scheme cooldowns when using hooks.
 
 Canonical working copy: `Documents/Development/CK3 Mods/ssc`.
 

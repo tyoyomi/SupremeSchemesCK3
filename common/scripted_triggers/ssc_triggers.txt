@@ -15,6 +15,16 @@ ssc_can_demand_strong_hook_actor = {
 	ssc_character_is_supreme_sovereign = yes
 }
 
+# Player Supreme Schemer and/or Supreme Sovereign: bypass hook spend + fabricate-hook CDs
+ssc_player_bypasses_hook_cooldowns = {
+	is_alive = yes
+	is_ai = no
+	OR = {
+		has_trait = ssc_supreme_schemer
+		ssc_character_is_supreme_sovereign = yes
+	}
+}
+
 ssc_can_receive_strong_hook_demand = {
 	is_alive = yes
 	NOT = { this = scope:actor }

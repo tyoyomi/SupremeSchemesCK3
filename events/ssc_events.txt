@@ -234,3 +234,17 @@ ssc_events.3102 = {
 		name = ssc_events.3102.a
 	}
 }
+
+# Hidden: clear Fabricate Hook scheme CD one day after success (CD applies on end_scheme)
+ssc_events.4001 = {
+	hidden = yes
+
+	trigger = {
+		ssc_player_bypasses_hook_cooldowns = yes
+		exists = var:ssc_hook_cd_clear_target
+	}
+
+	immediate = {
+		ssc_clear_fabricate_hook_cooldown_effect = yes
+	}
+}

@@ -12,3 +12,32 @@ ssc_on_death = {
 		ssc_clear_schemer_modifiers_effect = yes
 	}
 }
+
+# Strong-hook spend CD bypass for player schemer / Sovereign
+on_hook_used = {
+	on_actions = { ssc_on_hook_used }
+}
+
+ssc_on_hook_used = {
+	trigger = {
+		ssc_player_bypasses_hook_cooldowns = yes
+	}
+	effect = {
+		ssc_refresh_hook_after_use_effect = yes
+	}
+}
+
+# Fabricate Hook scheme CD clear after success outcome (end_scheme applies CD first)
+fabricate_hook_method_success_outcome = {
+	on_actions = { ssc_after_fabricate_hook_success }
+}
+
+ssc_after_fabricate_hook_success = {
+	trigger = {
+		ssc_player_bypasses_hook_cooldowns = yes
+		exists = scope:target
+	}
+	effect = {
+		ssc_queue_fabricate_hook_cooldown_clear_effect = yes
+	}
+}

@@ -529,3 +529,169 @@ ssc_demand_strong_hook_effect = {
 		}
 	}
 }
+
+### Hook cooldown bypass (player schemer and/or Sovereign)
+# on_hook_used: root = user, scope:target = hooked character.
+# Strong hooks stay but go on HOOK_COOLDOWN_DURATION_YEARS; remove+readd clears CD.
+ssc_refresh_hook_after_use_effect = {
+	if = {
+		limit = {
+			ssc_player_bypasses_hook_cooldowns = yes
+			exists = scope:target
+			scope:target = { is_alive = yes }
+			has_strong_hook = scope:target
+			NOT = { has_strong_usable_hook = scope:target }
+		}
+		# Preserve type when known; otherwise fall back to strong favor.
+		if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = strong_favor_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = strong_favor_hook target = scope:target }
+		}
+		else_if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = strong_blackmail_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = strong_blackmail_hook target = scope:target }
+		}
+		else_if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = strong_obligation_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = strong_obligation_hook target = scope:target }
+		}
+		else_if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = strong_indebted_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = strong_indebted_hook target = scope:target }
+		}
+		else_if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = fabrication_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = fabrication_hook target = scope:target }
+		}
+		else_if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = life_threat_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = life_threat_hook target = scope:target }
+		}
+		else_if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = major_crime_accomplice_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = major_crime_accomplice_hook target = scope:target }
+		}
+		else_if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = loyalty_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = loyalty_hook target = scope:target }
+		}
+		else_if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = strong_influence_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = strong_influence_hook target = scope:target }
+		}
+		else_if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = liege_favour_strong_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = liege_favour_strong_hook target = scope:target }
+		}
+		else_if = {
+			limit = {
+				has_hook_of_type = {
+					target = scope:target
+					type = saved_my_life_hook
+				}
+			}
+			remove_hook = { target = scope:target }
+			add_hook = { type = saved_my_life_hook target = scope:target }
+		}
+		else = {
+			remove_hook = { target = scope:target }
+			add_hook = { type = strong_favor_hook target = scope:target }
+		}
+	}
+}
+
+# Clear Fabricate Hook scheme CD against a saved target (after scheme end applies CD).
+# Expects this = owner; var:ssc_hook_cd_clear_target set.
+ssc_clear_fabricate_hook_cooldown_effect = {
+	if = {
+		limit = {
+			ssc_player_bypasses_hook_cooldowns = yes
+			exists = var:ssc_hook_cd_clear_target
+			var:ssc_hook_cd_clear_target = { is_alive = yes }
+		}
+		remove_scheme_cooldown_against = {
+			scheme = fabricate_hook
+			target = var:ssc_hook_cd_clear_target
+		}
+		remove_variable = ssc_hook_cd_clear_target
+	}
+}
+
+# Queue delayed clear; root should be scheme owner with scope:target present.
+ssc_queue_fabricate_hook_cooldown_clear_effect = {
+	if = {
+		limit = {
+			ssc_player_bypasses_hook_cooldowns = yes
+			exists = scope:target
+			scope:target = { is_alive = yes }
+		}
+		set_variable = {
+			name = ssc_hook_cd_clear_target
+			value = scope:target
+		}
+		trigger_event = {
+			id = ssc_events.4001
+			days = 1
+		}
+	}
+}

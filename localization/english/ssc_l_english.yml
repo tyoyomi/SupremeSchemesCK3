@@ -51,6 +51,7 @@
  ssc_tt_can_receive_strong_hook_demand:0 "They may receive this demand"
  ssc_demand_strong_hook_toast_title:0 "Strong Hook Secured"
  ssc_demand_strong_hook_toast_tt:0 "You hold a strong favor hook on them"
+ ssc_tt_hook_cd_bypass:0 "Player Supreme Schemers and Supreme Sovereigns reuse strong hooks immediately and clear Fabricate Hook cooldowns"
 
  # Tooltips
  ssc_tt_can_embrace:0 "You may embrace Supreme Schemes"
