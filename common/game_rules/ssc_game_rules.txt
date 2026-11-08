@@ -109,4 +109,12 @@ ssc_rule_title_steal_cap = {
 	ssc_rule_title_steal_cap_duchy = {
 		flag = blocks_achievements
 	}
+
+	ssc_rule_title_steal_cap_kingdom = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_title_steal_cap_empire = {
+		flag = blocks_achievements
+	}
 }

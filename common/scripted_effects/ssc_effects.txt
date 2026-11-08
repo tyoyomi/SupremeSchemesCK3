@@ -53,6 +53,14 @@ ssc_ensure_schemer_defaults_effect = {
 			limit = { has_game_rule = ssc_rule_title_steal_cap_county }
 			set_variable = { name = ssc_cfg_title_cap value = 1 }
 		}
+		else_if = {
+			limit = { has_game_rule = ssc_rule_title_steal_cap_empire }
+			set_variable = { name = ssc_cfg_title_cap value = 4 }
+		}
+		else_if = {
+			limit = { has_game_rule = ssc_rule_title_steal_cap_kingdom }
+			set_variable = { name = ssc_cfg_title_cap value = 3 }
+		}
 		else = {
 			set_variable = { name = ssc_cfg_title_cap value = 2 }
 		}
@@ -152,8 +160,35 @@ ssc_cycle_title_cap_cfg_effect = {
 		limit = { var:ssc_cfg_title_cap = 1 }
 		set_variable = { name = ssc_cfg_title_cap value = 2 }
 	}
+	else_if = {
+		limit = { var:ssc_cfg_title_cap = 2 }
+		set_variable = { name = ssc_cfg_title_cap value = 3 }
+	}
+	else_if = {
+		limit = { var:ssc_cfg_title_cap = 3 }
+		set_variable = { name = ssc_cfg_title_cap value = 4 }
+	}
 	else = {
 		set_variable = { name = ssc_cfg_title_cap value = 1 }
+	}
+}
+
+# this = schemer discovering secrets about scope:ssc_secret_target
+ssc_discover_all_secrets_of_target_effect = {
+	if = {
+		limit = {
+			exists = scope:ssc_secret_target
+			scope:ssc_secret_target = { is_alive = yes }
+		}
+		save_scope_as = ssc_discoverer
+		scope:ssc_secret_target = {
+			every_secret = {
+				limit = {
+					NOT = { is_known_by = scope:ssc_discoverer }
+				}
+				reveal_to = scope:ssc_discoverer
+			}
+		}
 	}
 }
 

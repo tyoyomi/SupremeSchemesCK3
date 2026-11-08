@@ -54,6 +54,18 @@ ssc_settings.1001 = {
 				trigger = { var:ssc_cfg_title_cap = 1 }
 				desc = ssc_settings.cap.county
 			}
+			triggered_desc = {
+				trigger = { var:ssc_cfg_title_cap = 2 }
+				desc = ssc_settings.cap.duchy
+			}
+			triggered_desc = {
+				trigger = { var:ssc_cfg_title_cap = 3 }
+				desc = ssc_settings.cap.kingdom
+			}
+			triggered_desc = {
+				trigger = { var:ssc_cfg_title_cap = 4 }
+				desc = ssc_settings.cap.empire
+			}
 			desc = ssc_settings.cap.duchy
 		}
 		desc = ssc_settings.1001.desc_blank
@@ -147,6 +159,18 @@ ssc_settings.1001 = {
 					triggered_desc = {
 						trigger = { var:ssc_cfg_title_cap = 1 }
 						desc = ssc_settings.opt.cap_county
+					}
+					triggered_desc = {
+						trigger = { var:ssc_cfg_title_cap = 2 }
+						desc = ssc_settings.opt.cap_duchy
+					}
+					triggered_desc = {
+						trigger = { var:ssc_cfg_title_cap = 3 }
+						desc = ssc_settings.opt.cap_kingdom
+					}
+					triggered_desc = {
+						trigger = { var:ssc_cfg_title_cap = 4 }
+						desc = ssc_settings.opt.cap_empire
 					}
 					desc = ssc_settings.opt.cap_duchy
 				}

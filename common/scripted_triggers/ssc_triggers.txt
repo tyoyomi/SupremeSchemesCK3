@@ -129,15 +129,51 @@ ssc_intensity_is_high = {
 	}
 }
 
+# Cap values: 1=county, 2=duchy, 3=kingdom, 4=empire
 ssc_title_cap_allows_duchy = {
 	OR = {
 		AND = {
 			exists = var:ssc_cfg_title_cap
-			var:ssc_cfg_title_cap = 2
+			var:ssc_cfg_title_cap >= 2
 		}
 		AND = {
 			NOT = { exists = var:ssc_cfg_title_cap }
-			has_game_rule = ssc_rule_title_steal_cap_duchy
+			OR = {
+				has_game_rule = ssc_rule_title_steal_cap_duchy
+				has_game_rule = ssc_rule_title_steal_cap_kingdom
+				has_game_rule = ssc_rule_title_steal_cap_empire
+			}
+		}
+	}
+	ssc_intensity_is_high = yes
+}
+
+ssc_title_cap_allows_kingdom = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_title_cap
+			var:ssc_cfg_title_cap >= 3
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_title_cap }
+			OR = {
+				has_game_rule = ssc_rule_title_steal_cap_kingdom
+				has_game_rule = ssc_rule_title_steal_cap_empire
+			}
+		}
+	}
+	ssc_intensity_is_high = yes
+}
+
+ssc_title_cap_allows_empire = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_title_cap
+			var:ssc_cfg_title_cap >= 4
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_title_cap }
+			has_game_rule = ssc_rule_title_steal_cap_empire
 		}
 	}
 	ssc_intensity_is_high = yes
@@ -148,23 +184,43 @@ ssc_title_is_stealable = {
 	exists = holder
 	is_landless_type_title = no
 	is_noble_family_title = no
-	NOR = {
-		tier = tier_barony
-		tier >= tier_kingdom
-	}
+	NOT = { tier = tier_barony }
 	holder = {
 		is_alive = yes
 		is_landed = yes
 		NOT = { this = scope:owner }
 		NOT = { government_has_flag = government_is_holy_order }
 	}
-	# Mid: county only. High: county, or duchy if cap allows.
+	# Mid: county only. High: up to configured cap (county→empire).
 	trigger_if = {
 		limit = {
 			exists = scope:owner
 			scope:owner = { ssc_intensity_is_mid = yes }
 		}
 		tier = tier_county
+	}
+	trigger_else_if = {
+		limit = {
+			exists = scope:owner
+			scope:owner = { ssc_title_cap_allows_empire = yes }
+		}
+		OR = {
+			tier = tier_county
+			tier = tier_duchy
+			tier = tier_kingdom
+			tier = tier_empire
+		}
+	}
+	trigger_else_if = {
+		limit = {
+			exists = scope:owner
+			scope:owner = { ssc_title_cap_allows_kingdom = yes }
+		}
+		OR = {
+			tier = tier_county
+			tier = tier_duchy
+			tier = tier_kingdom
+		}
 	}
 	trigger_else_if = {
 		limit = {
@@ -188,6 +244,8 @@ ssc_title_steal_leaves_holder_landed = {
 	}
 	OR = {
 		tier = tier_duchy
+		tier = tier_kingdom
+		tier = tier_empire
 		AND = {
 			tier = tier_county
 			scope:ssc_title_holder = {
@@ -195,6 +253,20 @@ ssc_title_steal_leaves_holder_landed = {
 					count >= 2
 					tier = tier_county
 				}
+			}
+		}
+	}
+	# Kingdom/empire steals require the holder keep at least one county
+	trigger_if = {
+		limit = {
+			OR = {
+				tier = tier_kingdom
+				tier = tier_empire
+			}
+		}
+		scope:ssc_title_holder = {
+			any_held_title = {
+				tier = tier_county
 			}
 		}
 	}

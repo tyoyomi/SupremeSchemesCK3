@@ -62,7 +62,7 @@
  ssc_tt_need_schemer_steal_title:0 "You are a Supreme Schemer at Mid/High intensity with Title Intrigue enabled"
  ssc_tt_target_has_artifact:0 "Target holds at least one artifact"
  ssc_tt_no_existing_strong_claim:0 "You do not already hold a strong claim on this title"
- ssc_tt_title_stealable:0 "Title is a safe county/duchy steal that leaves the holder landed"
+ ssc_tt_title_stealable:0 "Title is a safe steal within your cap that leaves the holder landed"
 
  # Schemes
  ssc_steal_artifact:0 "Steal Artifact"
@@ -83,7 +83,7 @@
 
  ssc_steal_title:0 "Steal Title"
  ssc_steal_title_action:0 "Steal Title"
- ssc_steal_title_desc:0 "Usurp a county (Mid) or county/duchy (High, per cap) through intrigue — not war. Hidden at Low intensity. Never kingdom or empire. Refuses last-county and unsafe special titles."
+ ssc_steal_title_desc:0 "Usurp a county (Mid) or up to your title-steal cap at High (duchy/kingdom/empire) through intrigue — not war. Hidden at Low intensity. Kingdom/empire only when the holder keeps a county. Refuses last-county and unsafe special titles."
  ssc_steal_title_success_desc:0 "You will take the title."
  ssc_steal_title_discovery_desc:0 "The holder may learn of the plot."
  ssc_steal_title_invalidated_title:0 "Steal Title scheme ended"
@@ -167,7 +167,7 @@
  ssc_settings.tt.turbo:0 "Turns character success/secrecy/slot package on or off"
  ssc_settings.tt.artifact:0 "Shows or hides the Steal Artifact scheme"
  ssc_settings.tt.title:0 "Shows or hides Fabricate Claim and Steal Title"
- ssc_settings.tt.title_cap:0 "County vs duchy ceiling for Steal Title at High intensity"
+ ssc_settings.tt.title_cap:0 "County → Duchy → Kingdom → Empire ceiling for Steal Title at High intensity. Kingdom/empire require the holder keep a county."
  ssc_settings.tt.close:0 "Close the hub"
 
  # Game rules
@@ -216,3 +216,16 @@
  setting_ssc_rule_title_steal_cap_county_desc:0 "Even at High intensity, Steal Title is capped at county."
  setting_ssc_rule_title_steal_cap_duchy:0 "Duchy"
  setting_ssc_rule_title_steal_cap_duchy_desc:0 "At High intensity, Steal Title may take duchies. Mid remains county-only. Blocks achievements."
+ setting_ssc_rule_title_steal_cap_kingdom:0 "Kingdom"
+ setting_ssc_rule_title_steal_cap_kingdom_desc:0 "At High intensity, Steal Title may take kingdoms when the holder keeps a county. Mid remains county-only. Blocks achievements."
+ setting_ssc_rule_title_steal_cap_empire:0 "Empire"
+ setting_ssc_rule_title_steal_cap_empire_desc:0 "At High intensity, Steal Title may take empires when the holder keeps a county. Mid remains county-only. Blocks achievements."
+ ssc_settings.cap.kingdom:0 "Title steal cap: Kingdom (High only)"
+ ssc_settings.cap.empire:0 "Title steal cap: Empire (High only)"
+ ssc_settings.opt.cap_kingdom:0 "Cycle title cap (now Kingdom)"
+ ssc_settings.opt.cap_empire:0 "Cycle title cap (now Empire)"
+ ssc_discover_secrets_interaction:0 "Discover Secrets"
+ ssc_discover_secrets_interaction_desc:0 "As a Supreme Schemer, instantly learn every secret [recipient.GetShortUIName] still keeps from you. Wallhack intrigue — no scheme required."
+ ssc_discover_secrets_interaction_extra_icon:0 "$"
+ ssc_tt_need_schemer_secrets:0 "You are a free adult Supreme Schemer"
+ ssc_tt_target_has_unknown_secrets:0 "They have at least one secret you do not know"
