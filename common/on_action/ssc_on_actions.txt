@@ -41,3 +41,18 @@ ssc_after_fabricate_hook_success = {
 		ssc_queue_fabricate_hook_cooldown_clear_effect = yes
 	}
 }
+
+# Auto Strong Hooks — silent grant on new direct vassals (root = new liege, scope:vassal)
+on_vassal_gained = {
+	on_actions = { ssc_on_vassal_gained }
+}
+
+ssc_on_vassal_gained = {
+	trigger = {
+		ssc_can_auto_strong_hook_liege = yes
+		exists = scope:vassal
+	}
+	effect = {
+		ssc_try_auto_hook_new_vassal_effect = yes
+	}
+}

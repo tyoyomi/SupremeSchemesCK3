@@ -112,6 +112,46 @@ ssc_module_title_on = {
 	}
 }
 
+ssc_module_auto_hooks_on = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_module_auto_hooks
+			var:ssc_cfg_module_auto_hooks = 1
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_module_auto_hooks }
+			has_game_rule = ssc_rule_module_auto_hooks_on
+		}
+	}
+	NOT = {
+		AND = {
+			exists = var:ssc_cfg_module_auto_hooks
+			var:ssc_cfg_module_auto_hooks = 0
+		}
+	}
+}
+
+# this = prospective hook owner / new liege (auto path)
+ssc_can_auto_strong_hook_liege = {
+	is_alive = yes
+	is_ai = no
+	ssc_character_is_supreme_sovereign = yes
+	ssc_module_auto_hooks_on = yes
+}
+
+# this = vassal candidate; expects scope:ssc_hook_owner = prospective owner
+ssc_can_receive_auto_strong_hook = {
+	is_alive = yes
+	NOT = { this = scope:ssc_hook_owner }
+	save_temporary_scope_as = ssc_hook_candidate
+	scope:ssc_hook_owner = {
+		can_add_hook = {
+			type = strong_favor_hook
+			target = scope:ssc_hook_candidate
+		}
+	}
+}
+
 ssc_intensity_is_low = {
 	exists = var:ssc_cfg_intensity
 	var:ssc_cfg_intensity = 1

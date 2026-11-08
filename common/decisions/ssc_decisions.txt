@@ -110,3 +110,56 @@ ssc_manage_supreme_schemes_decision = {
 		base = 0
 	}
 }
+
+ssc_hook_all_vassals_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	decision_group_type = major
+	desc = ssc_hook_all_vassals_decision_desc
+	selection_tooltip = ssc_hook_all_vassals_decision_tooltip
+	confirm_text = ssc_hook_all_vassals_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_alive = yes
+		is_ai = no
+		NOT = { has_game_rule = ssc_rule_granting_disabled }
+		ssc_character_is_supreme_sovereign = yes
+	}
+
+	is_valid = {
+		custom_tooltip = {
+			text = ssc_tt_actor_may_demand_strong_hook
+			ssc_can_demand_strong_hook_actor = yes
+		}
+		custom_tooltip = {
+			text = ssc_tt_has_hookable_vassals
+			any_vassal = {
+				save_temporary_scope_as = ssc_hook_candidate
+				is_alive = yes
+				NOT = { this = root }
+				root = {
+					can_add_hook = {
+						type = strong_favor_hook
+						target = scope:ssc_hook_candidate
+					}
+				}
+			}
+		}
+	}
+
+	effect = {
+		custom_tooltip = ssc_hook_all_vassals_decision_effect_tt
+		ssc_hook_all_direct_vassals_effect = yes
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

@@ -229,3 +229,26 @@
  ssc_discover_secrets_interaction_extra_icon:0 "$"
  ssc_tt_need_schemer_secrets:0 "You are a free adult Supreme Schemer"
  ssc_tt_target_has_unknown_secrets:0 "They have at least one secret you do not know"
+ # Auto Strong Hooks hub
+ ssc_settings.module.auto_hooks_on:0 "Auto Strong Hooks: On"
+ ssc_settings.module.auto_hooks_off:0 "Auto Strong Hooks: Off"
+ ssc_settings.opt.auto_hooks_on:0 "Toggle Auto Strong Hooks (now On)"
+ ssc_settings.opt.auto_hooks_off:0 "Toggle Auto Strong Hooks (now Off)"
+ ssc_settings.tt.auto_hooks:0 "When On, silently gain a strong favor hook on each new direct vassal"
+
+ # Hook All Vassals decision
+ ssc_hook_all_vassals_decision:0 "Hook All Vassals"
+ ssc_hook_all_vassals_decision_desc:0 "As Supreme Sovereign, secure a strong favor hook on every current direct vassal you can still hook. One click. No cooldown. Skips anyone already hooked."
+ ssc_hook_all_vassals_decision_tooltip:0 "Grant strong favor hooks on all hookable direct vassals"
+ ssc_hook_all_vassals_decision_confirm:0 "Secure Hooks"
+ ssc_hook_all_vassals_decision_effect_tt:0 "Strong favor hooks on eligible direct vassals"
+ ssc_tt_has_hookable_vassals:0 "You have at least one direct vassal you can still hook"
+ ssc_hook_all_vassals_toast_title:0 "Strong Hooks Secured"
+ ssc_hook_all_vassals_toast_tt:0 "Strong favor hooks secured on your vassals ([ROOT.Var('ssc_hook_all_count').GetValue])"
+
+ # Auto Strong Hooks game rule
+ rule_ssc_rule_module_auto_hooks:0 "Supreme Schemes: Auto Strong Hooks"
+ setting_ssc_rule_module_auto_hooks_on:0 "On"
+ setting_ssc_rule_module_auto_hooks_on_desc:0 "New direct vassals of a player Supreme Sovereign silently receive a strong favor hook toward you. Blocks achievements."
+ setting_ssc_rule_module_auto_hooks_off:0 "Off"
+ setting_ssc_rule_module_auto_hooks_off_desc:0 "No automatic strong hooks on new vassals by default (hub can still enable)."

@@ -80,6 +80,21 @@ ssc_rule_module_title_intrigue = {
 	}
 }
 
+ssc_rule_module_auto_hooks = {
+	categories = {
+		tweaks
+	}
+
+	default = ssc_rule_module_auto_hooks_on
+
+	ssc_rule_module_auto_hooks_on = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_module_auto_hooks_off = {
+	}
+}
+
 ssc_rule_ai = {
 	categories = {
 		tweaks

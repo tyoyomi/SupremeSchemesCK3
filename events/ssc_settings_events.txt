@@ -51,6 +51,14 @@ ssc_settings.1001 = {
 		desc = ssc_settings.1001.desc_blank
 		first_valid = {
 			triggered_desc = {
+				trigger = { var:ssc_cfg_module_auto_hooks = 1 }
+				desc = ssc_settings.module.auto_hooks_on
+			}
+			desc = ssc_settings.module.auto_hooks_off
+		}
+		desc = ssc_settings.1001.desc_blank
+		first_valid = {
+			triggered_desc = {
 				trigger = { var:ssc_cfg_title_cap = 1 }
 				desc = ssc_settings.cap.county
 			}
@@ -149,6 +157,23 @@ ssc_settings.1001 = {
 		}
 		custom_tooltip = ssc_settings.tt.title
 		ssc_cycle_module_title_cfg_effect = yes
+		trigger_event = ssc_settings.1001
+	}
+
+	option = {
+		name = {
+			text = {
+				first_valid = {
+					triggered_desc = {
+						trigger = { var:ssc_cfg_module_auto_hooks = 1 }
+						desc = ssc_settings.opt.auto_hooks_on
+					}
+					desc = ssc_settings.opt.auto_hooks_off
+				}
+			}
+		}
+		custom_tooltip = ssc_settings.tt.auto_hooks
+		ssc_cycle_module_auto_hooks_cfg_effect = yes
 		trigger_event = ssc_settings.1001
 	}
 

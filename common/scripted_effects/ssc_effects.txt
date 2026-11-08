@@ -48,6 +48,16 @@ ssc_ensure_schemer_defaults_effect = {
 		}
 	}
 	if = {
+		limit = { NOT = { exists = var:ssc_cfg_module_auto_hooks } }
+		if = {
+			limit = { has_game_rule = ssc_rule_module_auto_hooks_off }
+			set_variable = { name = ssc_cfg_module_auto_hooks value = 0 }
+		}
+		else = {
+			set_variable = { name = ssc_cfg_module_auto_hooks value = 1 }
+		}
+	}
+	if = {
 		limit = { NOT = { exists = var:ssc_cfg_title_cap } }
 		if = {
 			limit = { has_game_rule = ssc_rule_title_steal_cap_county }
@@ -151,6 +161,17 @@ ssc_cycle_module_title_cfg_effect = {
 	}
 	else = {
 		set_variable = { name = ssc_cfg_module_title value = 1 }
+	}
+}
+
+ssc_cycle_module_auto_hooks_cfg_effect = {
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = { var:ssc_cfg_module_auto_hooks = 1 }
+		set_variable = { name = ssc_cfg_module_auto_hooks value = 0 }
+	}
+	else = {
+		set_variable = { name = ssc_cfg_module_auto_hooks value = 1 }
 	}
 }
 
@@ -542,27 +563,112 @@ ssc_set_scheme_artifact_target_effect = {
 	}
 }
 
-### Strong hook demand (player Supreme Sovereign -> recipient)
-# Expects this = actor; scope:recipient = target.
-ssc_demand_strong_hook_effect = {
+### Strong favor hook apply (shared)
+# this = hook owner; expects scope:ssc_hook_target.
+# Optional: save_scope_value_as = { name = ssc_hook_notify value = yes } before call for toast.
+ssc_apply_strong_favor_hook_effect = {
 	if = {
 		limit = {
+			exists = scope:ssc_hook_target
+			scope:ssc_hook_target = { is_alive = yes }
 			can_add_hook = {
 				type = strong_favor_hook
-				target = scope:recipient
+				target = scope:ssc_hook_target
 			}
 		}
 		add_hook = {
 			type = strong_favor_hook
-			target = scope:recipient
+			target = scope:ssc_hook_target
 		}
-		send_interface_toast = {
-			type = event_toast_effect_good
-			title = ssc_demand_strong_hook_toast_title
-			left_icon = scope:recipient
-			custom_tooltip = ssc_demand_strong_hook_toast_tt
+		if = {
+			limit = {
+				exists = scope:ssc_hook_notify
+				scope:ssc_hook_notify = yes
+			}
+			send_interface_toast = {
+				type = event_toast_effect_good
+				title = ssc_demand_strong_hook_toast_title
+				left_icon = scope:ssc_hook_target
+				custom_tooltip = ssc_demand_strong_hook_toast_tt
+			}
 		}
 	}
+}
+
+### Strong hook demand (player Supreme Sovereign -> recipient)
+# Expects this = actor; scope:recipient = target.
+ssc_demand_strong_hook_effect = {
+	if = {
+		limit = { exists = scope:recipient }
+		scope:recipient = { save_scope_as = ssc_hook_target }
+		save_scope_value_as = {
+			name = ssc_hook_notify
+			value = yes
+		}
+		ssc_apply_strong_favor_hook_effect = yes
+	}
+}
+
+### Auto Strong Hooks — silent try on new vassal
+# root/this = new liege; scope:vassal = gained vassal. No toast (ASH11).
+ssc_try_auto_hook_new_vassal_effect = {
+	if = {
+		limit = {
+			ssc_can_auto_strong_hook_liege = yes
+			exists = scope:vassal
+		}
+		# Force silent (no per-vassal toast)
+		save_scope_value_as = {
+			name = ssc_hook_notify
+			value = no
+		}
+		save_scope_as = ssc_hook_owner
+		scope:vassal = {
+			if = {
+				limit = { ssc_can_receive_auto_strong_hook = yes }
+				save_scope_as = ssc_hook_target
+				scope:ssc_hook_owner = {
+					ssc_apply_strong_favor_hook_effect = yes
+				}
+			}
+		}
+	}
+}
+
+### Hook All Vassals — mass silent apply + one summary toast
+# this = player liege. Direct vassals only. No cooldown. Does not require module On.
+ssc_hook_all_direct_vassals_effect = {
+	save_scope_as = ssc_hook_owner
+	# Force silent per-vassal apply; summary toast is separate
+	save_scope_value_as = {
+		name = ssc_hook_notify
+		value = no
+	}
+	set_variable = {
+		name = ssc_hook_all_count
+		value = 0
+	}
+	every_vassal = {
+		limit = { ssc_can_receive_auto_strong_hook = yes }
+		save_scope_as = ssc_hook_target
+		scope:ssc_hook_owner = {
+			ssc_apply_strong_favor_hook_effect = yes
+			change_variable = {
+				name = ssc_hook_all_count
+				add = 1
+			}
+		}
+	}
+	if = {
+		limit = { var:ssc_hook_all_count > 0 }
+		send_interface_toast = {
+			type = event_toast_effect_good
+			title = ssc_hook_all_vassals_toast_title
+			left_icon = root
+			custom_tooltip = ssc_hook_all_vassals_toast_tt
+		}
+	}
+	# Keep ssc_hook_all_count so the toast tooltip can still resolve the count.
 }
 
 ### Hook cooldown bypass (player schemer and/or Sovereign)
