@@ -1,0 +1,236 @@
+namespace = ssc_events
+
+# Grant toast
+ssc_events.1001 = {
+	type = character_event
+	title = ssc_events.1001.t
+	desc = ssc_events.1001.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+
+	option = {
+		name = ssc_events.1001.a
+	}
+}
+
+# Revoke toast
+ssc_events.1002 = {
+	type = character_event
+	title = ssc_events.1002.t
+	desc = ssc_events.1002.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = dismissal
+	}
+
+	option = {
+		name = ssc_events.1002.a
+	}
+}
+
+# Artifact stolen success
+ssc_events.2001 = {
+	type = character_event
+	title = ssc_events.2001.t
+	desc = ssc_events.2001.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	lower_right_portrait = scope:target
+	artifact = {
+		target = scope:artifact
+		position = lower_center_portrait
+		trigger = { exists = scope:artifact }
+	}
+
+	option = {
+		name = ssc_events.2001.a
+	}
+}
+
+# Artifact steal failed
+ssc_events.2002 = {
+	type = character_event
+	title = ssc_events.2002.t
+	desc = ssc_events.2002.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = dismissal
+	}
+	lower_right_portrait = scope:target
+
+	option = {
+		name = ssc_events.2002.a
+	}
+}
+
+# Artifact picker (player, on scheme start)
+ssc_events.2010 = {
+	type = character_event
+	title = ssc_events.2010.t
+	desc = ssc_events.2010.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+	lower_right_portrait = scope:target
+	artifact = {
+		target = scope:artifact
+		position = lower_center_portrait
+		trigger = { exists = scope:artifact }
+	}
+
+	immediate = {
+		if = {
+			limit = { NOT = { exists = scope:scheme } }
+			random_scheme = {
+				limit = { scheme_type = ssc_steal_artifact }
+				save_scope_as = scheme
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:scheme
+				NOT = { exists = scope:artifact }
+			}
+			scope:scheme = {
+				if = {
+					limit = { exists = var:target_artifact }
+					var:target_artifact = { save_scope_as = artifact }
+				}
+			}
+		}
+		if = {
+			limit = { NOT = { exists = scope:target } }
+			scope:scheme = {
+				scheme_target_character = { save_scope_as = target }
+			}
+		}
+	}
+
+	option = {
+		name = ssc_events.2010.a
+		trigger = { exists = scope:artifact }
+		custom_tooltip = ssc_events.2010.a.tt
+	}
+
+	option = {
+		name = ssc_events.2010.b
+		trigger = {
+			exists = scope:target
+			scope:target = {
+				any_character_artifact = {
+					rarity = illustrious
+				}
+			}
+		}
+		custom_tooltip = ssc_events.2010.b.tt
+		scope:target = {
+			random_character_artifact = {
+				limit = { rarity = illustrious }
+				save_scope_as = artifact
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:artifact
+				exists = scope:scheme
+			}
+			scope:artifact = {
+				ssc_set_scheme_artifact_target_effect = yes
+			}
+		}
+	}
+
+	option = {
+		name = ssc_events.2010.c
+		custom_tooltip = ssc_events.2010.c.tt
+		scope:target = {
+			random_character_artifact = {
+				save_scope_as = artifact
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:artifact
+				exists = scope:scheme
+			}
+			scope:artifact = {
+				ssc_set_scheme_artifact_target_effect = yes
+			}
+		}
+	}
+}
+
+# Fabricated claim success
+ssc_events.3001 = {
+	type = character_event
+	title = ssc_events.3001.t
+	desc = ssc_events.3001.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	option = {
+		name = ssc_events.3001.a
+	}
+}
+
+# Fabricate claim failed
+ssc_events.3002 = {
+	type = character_event
+	title = ssc_events.3002.t
+	desc = ssc_events.3002.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = dismissal
+	}
+
+	option = {
+		name = ssc_events.3002.a
+	}
+}
+
+# Title stolen success
+ssc_events.3101 = {
+	type = character_event
+	title = ssc_events.3101.t
+	desc = ssc_events.3101.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	lower_right_portrait = scope:ssc_former_holder
+
+	option = {
+		name = ssc_events.3101.a
+	}
+}
+
+# Title steal failed
+ssc_events.3102 = {
+	type = character_event
+	title = ssc_events.3102.t
+	desc = ssc_events.3102.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = dismissal
+	}
+
+	option = {
+		name = ssc_events.3102.a
+	}
+}

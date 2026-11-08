@@ -1,0 +1,112 @@
+ssc_embrace_supreme_schemes_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	decision_group_type = major
+	desc = ssc_embrace_supreme_schemes_decision_desc
+	selection_tooltip = ssc_embrace_supreme_schemes_decision_tooltip
+	confirm_text = ssc_embrace_supreme_schemes_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_alive = yes
+		is_ai = no
+		NOT = { has_game_rule = ssc_rule_granting_disabled }
+		NOT = { has_trait = ssc_supreme_schemer }
+	}
+
+	is_valid = {
+		custom_tooltip = {
+			text = ssc_tt_can_embrace
+			ssc_can_embrace_schemes = yes
+		}
+	}
+
+	effect = {
+		custom_tooltip = ssc_embrace_supreme_schemes_decision_effect_tt
+		ssc_bestow_supreme_schemer_effect = yes
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+ssc_renounce_supreme_schemes_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	decision_group_type = major
+	desc = ssc_renounce_supreme_schemes_decision_desc
+	selection_tooltip = ssc_renounce_supreme_schemes_decision_tooltip
+	confirm_text = ssc_renounce_supreme_schemes_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_alive = yes
+		is_ai = no
+		has_trait = ssc_supreme_schemer
+	}
+
+	is_valid = {
+		has_trait = ssc_supreme_schemer
+	}
+
+	effect = {
+		custom_tooltip = ssc_renounce_supreme_schemes_decision_effect_tt
+		ssc_revoke_supreme_schemer_effect = yes
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+ssc_manage_supreme_schemes_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	decision_group_type = major
+	desc = ssc_manage_supreme_schemes_decision_desc
+	selection_tooltip = ssc_manage_supreme_schemes_decision_tooltip
+	confirm_text = ssc_manage_supreme_schemes_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_alive = yes
+		NOT = { has_game_rule = ssc_rule_granting_disabled }
+		OR = {
+			is_ai = no
+			has_game_rule = ssc_rule_ai_follow_intensity
+		}
+	}
+
+	is_valid = {
+		always = yes
+	}
+
+	effect = {
+		custom_tooltip = ssc_manage_supreme_schemes_decision_effect_tt
+		ssc_ensure_schemer_defaults_effect = yes
+		trigger_event = ssc_settings.1001
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

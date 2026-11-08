@@ -1,0 +1,224 @@
+# Supreme Schemes — scripted triggers
+
+ssc_is_supreme_schemer = {
+	has_trait = ssc_supreme_schemer
+}
+
+ssc_granting_disabled = {
+	has_game_rule = ssc_rule_granting_disabled
+}
+
+ssc_can_embrace_schemes = {
+	is_alive = yes
+	is_adult = yes
+	NOT = { has_game_rule = ssc_rule_granting_disabled }
+	NOT = { has_trait = ssc_supreme_schemer }
+	trigger_if = {
+		limit = { has_game_rule = ssc_rule_granting_player_self }
+		is_ai = no
+	}
+	trigger_else_if = {
+		limit = { has_game_rule = ssc_rule_granting_player_and_targets }
+		OR = {
+			is_ai = no
+			has_game_rule = ssc_rule_ai_follow_intensity
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+
+ssc_module_turbo_on = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_module_turbo
+			var:ssc_cfg_module_turbo = 1
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_module_turbo }
+			has_game_rule = ssc_rule_module_turbo_on
+		}
+	}
+	NOT = {
+		AND = {
+			exists = var:ssc_cfg_module_turbo
+			var:ssc_cfg_module_turbo = 0
+		}
+	}
+}
+
+ssc_module_artifact_on = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_module_artifact
+			var:ssc_cfg_module_artifact = 1
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_module_artifact }
+			has_game_rule = ssc_rule_module_artifact_theft_on
+		}
+	}
+	NOT = {
+		AND = {
+			exists = var:ssc_cfg_module_artifact
+			var:ssc_cfg_module_artifact = 0
+		}
+	}
+}
+
+ssc_module_title_on = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_module_title
+			var:ssc_cfg_module_title = 1
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_module_title }
+			has_game_rule = ssc_rule_module_title_intrigue_on
+		}
+	}
+	NOT = {
+		AND = {
+			exists = var:ssc_cfg_module_title
+			var:ssc_cfg_module_title = 0
+		}
+	}
+}
+
+ssc_intensity_is_low = {
+	exists = var:ssc_cfg_intensity
+	var:ssc_cfg_intensity = 1
+}
+
+ssc_intensity_is_mid = {
+	exists = var:ssc_cfg_intensity
+	var:ssc_cfg_intensity = 2
+}
+
+ssc_intensity_is_high = {
+	OR = {
+		NOT = { exists = var:ssc_cfg_intensity }
+		var:ssc_cfg_intensity = 3
+	}
+}
+
+ssc_title_cap_allows_duchy = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_title_cap
+			var:ssc_cfg_title_cap = 2
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_title_cap }
+			has_game_rule = ssc_rule_title_steal_cap_duchy
+		}
+	}
+	ssc_intensity_is_high = yes
+}
+
+# this = title; safe to steal via intrigue
+ssc_title_is_stealable = {
+	exists = holder
+	is_landless_type_title = no
+	is_noble_family_title = no
+	NOR = {
+		tier = tier_barony
+		tier >= tier_kingdom
+	}
+	holder = {
+		is_alive = yes
+		is_landed = yes
+		NOT = { this = scope:owner }
+		NOT = { government_has_flag = government_is_holy_order }
+	}
+	# Mid: county only. High: county, or duchy if cap allows.
+	trigger_if = {
+		limit = {
+			exists = scope:owner
+			scope:owner = { ssc_intensity_is_mid = yes }
+		}
+		tier = tier_county
+	}
+	trigger_else_if = {
+		limit = {
+			exists = scope:owner
+			scope:owner = { ssc_title_cap_allows_duchy = yes }
+		}
+		OR = {
+			tier = tier_county
+			tier = tier_duchy
+		}
+	}
+	trigger_else = {
+		tier = tier_county
+	}
+}
+
+# this = title; leave target landed after steal
+ssc_title_steal_leaves_holder_landed = {
+	holder = {
+		save_temporary_scope_as = ssc_title_holder
+	}
+	OR = {
+		tier = tier_duchy
+		AND = {
+			tier = tier_county
+			scope:ssc_title_holder = {
+				any_held_title = {
+					count >= 2
+					tier = tier_county
+				}
+			}
+		}
+	}
+}
+
+ssc_actor_may_bestow_by_rule = {
+	NOT = { has_game_rule = ssc_rule_granting_disabled }
+	has_game_rule = ssc_rule_granting_player_and_targets
+	trigger_if = {
+		limit = { is_ai = yes }
+		has_game_rule = ssc_rule_ai_follow_intensity
+	}
+}
+
+ssc_ai_may_use_ssc_schemes = {
+	OR = {
+		is_ai = no
+		has_game_rule = ssc_rule_ai_follow_intensity
+	}
+}
+
+ssc_owner_can_run_artifact_scheme = {
+	ssc_is_supreme_schemer = yes
+	ssc_module_artifact_on = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_incapable = no
+	NOT = { has_character_flag = ssc_steal_artifact_cd }
+	ssc_ai_may_use_ssc_schemes = yes
+}
+
+ssc_owner_can_run_fabricate_scheme = {
+	ssc_is_supreme_schemer = yes
+	ssc_module_title_on = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_incapable = no
+	is_landless_adventurer = no
+	NOT = { has_character_flag = ssc_fabricate_claim_cd }
+	ssc_ai_may_use_ssc_schemes = yes
+}
+
+ssc_owner_can_run_steal_title_scheme = {
+	ssc_is_supreme_schemer = yes
+	ssc_module_title_on = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_incapable = no
+	is_landless_adventurer = no
+	NOT = { ssc_intensity_is_low = yes }
+	NOT = { has_character_flag = ssc_steal_title_cd }
+	ssc_ai_may_use_ssc_schemes = yes
+}

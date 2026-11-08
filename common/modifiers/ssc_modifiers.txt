@@ -1,0 +1,49 @@
+# Supreme Schemes — intensity turbo modifiers (character-scoped scheme keys only)
+
+@ssc_low_success = 40
+@ssc_low_secrecy = 40
+@ssc_low_enemy = -20
+@ssc_low_slots = 2
+@ssc_low_enemy_phase = 20
+
+@ssc_mid_success = 80
+@ssc_mid_secrecy = 80
+@ssc_mid_enemy = -40
+@ssc_mid_slots = 4
+@ssc_mid_enemy_phase = 40
+
+@ssc_high_success = 150
+@ssc_high_secrecy = 150
+@ssc_high_enemy = -75
+@ssc_high_slots = 8
+@ssc_high_enemy_phase = 75
+
+ssc_turbo_low_modifier = {
+	owned_hostile_scheme_success_chance_add = @ssc_low_success
+	owned_personal_scheme_success_chance_add = @ssc_low_success
+	owned_scheme_secrecy_add = @ssc_low_secrecy
+	enemy_hostile_scheme_success_chance_add = @ssc_low_enemy
+	enemy_hostile_scheme_phase_duration_add = @ssc_low_enemy_phase
+	max_personal_schemes_add = @ssc_low_slots
+	max_hostile_schemes_add = @ssc_low_slots
+}
+
+ssc_turbo_med_modifier = {
+	owned_hostile_scheme_success_chance_add = @ssc_mid_success
+	owned_personal_scheme_success_chance_add = @ssc_mid_success
+	owned_scheme_secrecy_add = @ssc_mid_secrecy
+	enemy_hostile_scheme_success_chance_add = @ssc_mid_enemy
+	enemy_hostile_scheme_phase_duration_add = @ssc_mid_enemy_phase
+	max_personal_schemes_add = @ssc_mid_slots
+	max_hostile_schemes_add = @ssc_mid_slots
+}
+
+ssc_turbo_high_modifier = {
+	owned_hostile_scheme_success_chance_add = @ssc_high_success
+	owned_personal_scheme_success_chance_add = @ssc_high_success
+	owned_scheme_secrecy_add = @ssc_high_secrecy
+	enemy_hostile_scheme_success_chance_add = @ssc_high_enemy
+	enemy_hostile_scheme_phase_duration_add = @ssc_high_enemy_phase
+	max_personal_schemes_add = @ssc_high_slots
+	max_hostile_schemes_add = @ssc_high_slots
+}

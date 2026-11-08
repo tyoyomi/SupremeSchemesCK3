@@ -1,0 +1,29 @@
+@ssc_intrigue = 28
+@ssc_other_skill = 12
+@ssc_trait_scheme_floor = 40
+@ssc_trait_max_schemes = 2
+
+ssc_supreme_schemer = {
+	category = fame
+	random_creation = 0
+	genetic = no
+	immortal = no
+	good = yes
+	shown_in_ruler_designer = yes
+
+	flag = ssc_is_supreme_schemer
+
+	intrigue = @ssc_intrigue
+	diplomacy = @ssc_other_skill
+	martial = @ssc_other_skill
+	stewardship = @ssc_other_skill
+	learning = @ssc_other_skill
+	prowess = @ssc_other_skill
+
+	# Modest baseline; intensity turbo modifiers carry the OP package
+	owned_hostile_scheme_success_chance_add = @ssc_trait_scheme_floor
+	owned_personal_scheme_success_chance_add = @ssc_trait_scheme_floor
+	owned_scheme_secrecy_add = @ssc_trait_scheme_floor
+	max_personal_schemes_add = @ssc_trait_max_schemes
+	max_hostile_schemes_add = @ssc_trait_max_schemes
+}

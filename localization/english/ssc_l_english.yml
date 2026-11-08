@@ -1,0 +1,208 @@
+﻿l_english:
+ # Trait
+ trait_ssc_supreme_schemer:0 "Supreme Schemer"
+ trait_ssc_supreme_schemer_desc:0 "Plots resolve in days, secrecy is absurd, and intrigue alone can steal artifacts and titles. Personal power stays below a Supreme Sovereign — the cheat is tempo and certainty."
+
+ # Modifiers
+ ssc_turbo_low_modifier:0 "Supreme Tempo (Low)"
+ ssc_turbo_low_modifier_desc:0 "Mild scheme success, secrecy, and slots. Phases still finish far faster than vanilla on Supreme Schemes plots."
+ ssc_turbo_med_modifier:0 "Supreme Tempo (Mid)"
+ ssc_turbo_med_modifier_desc:0 "Strong scheme success, secrecy, and slots. Failures are rare."
+ ssc_turbo_high_modifier:0 "Supreme Tempo (High)"
+ ssc_turbo_high_modifier_desc:0 "Near-guaranteed success, extreme secrecy, and many concurrent schemes. Vanilla schemes also benefit; Supreme Schemes types finish in about three days."
+
+ # Opinions
+ ssc_stolen_title_opinion:0 "Stole my title"
+ ssc_fabricated_claim_opinion:0 "Fabricated a claim on my title"
+ ssc_attempted_scheme_opinion:0 "Attempted a Supreme Scheme against me"
+
+ # Decisions
+ ssc_embrace_supreme_schemes_decision:0 "Embrace Supreme Schemes"
+ ssc_embrace_supreme_schemes_decision_desc:0 "Accept the mantle of Supreme Schemer. Your plots finish in days, succeed near-certainly at High intensity, and unlock artifact theft and title intrigue schemes."
+ ssc_embrace_supreme_schemes_decision_tooltip:0 "Gain the Supreme Schemer trait and High-intensity tempo package"
+ ssc_embrace_supreme_schemes_decision_confirm:0 "Embrace Schemes"
+ ssc_embrace_supreme_schemes_decision_effect_tt:0 "You become a Supreme Schemer"
+
+ ssc_renounce_supreme_schemes_decision:0 "Renounce Supreme Schemes"
+ ssc_renounce_supreme_schemes_decision_desc:0 "Lay down the Supreme Schemer mantle. Tempo modifiers and unique steal schemes go with it."
+ ssc_renounce_supreme_schemes_decision_tooltip:0 "Remove the Supreme Schemer trait and turbo modifiers"
+ ssc_renounce_supreme_schemes_decision_confirm:0 "Renounce"
+ ssc_renounce_supreme_schemes_decision_effect_tt:0 "You lose Supreme Schemer"
+
+ ssc_manage_supreme_schemes_decision:0 "Manage Supreme Schemes"
+ ssc_manage_supreme_schemes_decision_desc:0 "Review intensity, module toggles, and title-steal cap. Cycle options show the current value before flipping. Stacks with Supreme Sovereign Schemes hub if both are loaded — intentionally OP."
+ ssc_manage_supreme_schemes_decision_tooltip:0 "Open the Supreme Schemes settings hub"
+ ssc_manage_supreme_schemes_decision_confirm:0 "Open Hub"
+ ssc_manage_supreme_schemes_decision_effect_tt:0 "Opens the Supreme Schemes manage hub"
+
+ # Interactions
+ ssc_bestow_supreme_schemer_interaction:0 "Bestow Supreme Schemer"
+ ssc_bestow_supreme_schemer_interaction_desc:0 "Elevate [recipient.GetShortUIName] as a Supreme Schemer. Available when the granting rule allows targets."
+ ssc_bestow_supreme_schemer_interaction_extra_icon:0 "$ssc_bestow_supreme_schemer_interaction$"
+
+ ssc_revoke_supreme_schemer_interaction:0 "Revoke Supreme Schemer"
+ ssc_revoke_supreme_schemer_interaction_desc:0 "Strip [recipient.GetShortUIName] of the Supreme Schemer honor."
+
+ # Tooltips
+ ssc_tt_can_embrace:0 "You may embrace Supreme Schemes"
+ ssc_tt_actor_may_bestow:0 "You may bestow Supreme Schemer"
+ ssc_tt_can_receive_schemer:0 "They may receive Supreme Schemer"
+ ssc_tt_need_schemer:0 "You are a Supreme Schemer with Artifact Theft enabled"
+ ssc_tt_need_schemer_title:0 "You are a Supreme Schemer with Title Intrigue enabled"
+ ssc_tt_need_schemer_steal_title:0 "You are a Supreme Schemer at Mid/High intensity with Title Intrigue enabled"
+ ssc_tt_target_has_artifact:0 "Target holds at least one artifact"
+ ssc_tt_no_existing_strong_claim:0 "You do not already hold a strong claim on this title"
+ ssc_tt_title_stealable:0 "Title is a safe county/duchy steal that leaves the holder landed"
+
+ # Schemes
+ ssc_steal_artifact:0 "Steal Artifact"
+ ssc_steal_artifact_action:0 "Steal Artifact"
+ ssc_steal_artifact_desc:0 "Pilfer an artifact from the target's holdings through intrigue. No prior claim required. Reliquary heirlooms may later reclaim — soft tension, not a bug."
+ ssc_steal_artifact_success_desc:0 "You will take one of their artifacts."
+ ssc_steal_artifact_discovery_desc:0 "They may learn you tried to steal from them."
+ ssc_steal_artifact_invalidated_title:0 "Steal Artifact scheme ended"
+ ssc_steal_artifact_invalidated_desc:0 "The scheme is no longer valid."
+
+ ssc_fabricate_title_claim:0 "Fabricate Title Claim"
+ ssc_fabricate_title_claim_action:0 "Fabricate Claim"
+ ssc_fabricate_title_claim_desc:0 "Forge a claim on a title through intrigue in days. Low intensity yields an unpressed claim; Mid and High yield a strong claim."
+ ssc_fabricate_title_claim_success_desc:0 "You will gain a claim on the title."
+ ssc_fabricate_title_claim_discovery_desc:0 "The holder may learn of your forgery."
+ ssc_fabricate_title_claim_invalidated_title:0 "Fabricate Claim scheme ended"
+ ssc_fabricate_title_claim_invalidated_desc:0 "The scheme is no longer valid."
+
+ ssc_steal_title:0 "Steal Title"
+ ssc_steal_title_action:0 "Steal Title"
+ ssc_steal_title_desc:0 "Usurp a county (Mid) or county/duchy (High, per cap) through intrigue — not war. Hidden at Low intensity. Never kingdom or empire. Refuses last-county and unsafe special titles."
+ ssc_steal_title_success_desc:0 "You will take the title."
+ ssc_steal_title_discovery_desc:0 "The holder may learn of the plot."
+ ssc_steal_title_invalidated_title:0 "Steal Title scheme ended"
+ ssc_steal_title_invalidated_desc:0 "The scheme is no longer valid."
+
+ # Events
+ ssc_events.1001.t:0 "Supreme Schemer"
+ ssc_events.1001.desc:0 "The web tightens around your fingers. Plots will finish in days, and at High intensity they functionally cannot fail."
+ ssc_events.1001.a:0 "Excellent."
+
+ ssc_events.1002.t:0 "Schemes Renounced"
+ ssc_events.1002.desc:0 "You set aside the Supreme Schemer mantle. Tempo and theft schemes fade with it."
+ ssc_events.1002.a:0 "So be it."
+
+ ssc_events.2001.t:0 "Artifact Secured"
+ ssc_events.2001.desc:0 "The piece is yours. If it was a Reliquary heirloom, never-lost magic may try to reclaim it later — intended soft conflict."
+ ssc_events.2001.a:0 "Mine."
+
+ ssc_events.2002.t:0 "Heist Foiled"
+ ssc_events.2002.desc:0 "The attempt failed. They are watching more carefully."
+ ssc_events.2002.a:0 "Annoying."
+
+ ssc_events.2010.t:0 "Choose a Prize"
+ ssc_events.2010.desc:0 "Which artifact will your agents pursue? Confirm the current pick, force an illustrious piece if any exist, or roll a random holding."
+ ssc_events.2010.a:0 "Keep current pick"
+ ssc_events.2010.a.tt:0 "Continue targeting the selected artifact"
+ ssc_events.2010.b:0 "Steal an illustrious piece"
+ ssc_events.2010.b.tt:0 "Retarget a random illustrious artifact they hold"
+ ssc_events.2010.c:0 "Steal a random piece"
+ ssc_events.2010.c.tt:0 "Retarget a random artifact they hold"
+
+ ssc_events.3001.t:0 "Claim Fabricated"
+ ssc_events.3001.desc:0 "The parchment is sealed. Your claim on the title is ready."
+ ssc_events.3001.a:0 "As planned."
+
+ ssc_events.3002.t:0 "Forgery Failed"
+ ssc_events.3002.desc:0 "The claim did not stick. Try again after the cooldown."
+ ssc_events.3002.a:0 "Frustrating."
+
+ ssc_events.3101.t:0 "Title Stolen"
+ ssc_events.3101.desc:0 "Through intrigue alone, the title changes hands. Expect fury — and let succession settle itself."
+ ssc_events.3101.a:0 "It is mine."
+
+ ssc_events.3102.t:0 "Usurpation Failed"
+ ssc_events.3102.desc:0 "The title remains theirs. The plot collapsed."
+ ssc_events.3102.a:0 "Another time."
+
+ # Settings hub
+ ssc_settings.1001.t:0 "Supreme Schemes"
+ ssc_settings.1001.desc_intro:0 "Tune intrigue tempo and theft modules. High intensity aims for ~3-day Supreme Schemes phases and functionally guaranteed success. Vanilla schemes get success/secrecy/slot help; day-scale finish is strongest on SSC scheme types."
+ ssc_settings.1001.desc_blank:0 "\n"
+ ssc_settings.1001.desc_footer:0 "Close when finished. Modules Off hide the matching schemes. Title cap only matters at High for Steal Title."
+ ssc_settings.1001.close:0 "Close"
+
+ ssc_settings.tier.intensity_1:0 "Intensity: Low (~14-day phases, soft success)"
+ ssc_settings.tier.intensity_2:0 "Intensity: Mid (~7-day phases, rare fails)"
+ ssc_settings.tier.intensity_3:0 "Intensity: High (~3-day phases, can't-fail floor)"
+
+ ssc_settings.module.turbo_on:0 "Supreme Tempo: On"
+ ssc_settings.module.turbo_off:0 "Supreme Tempo: Off"
+ ssc_settings.module.artifact_on:0 "Artifact Theft: On"
+ ssc_settings.module.artifact_off:0 "Artifact Theft: Off"
+ ssc_settings.module.title_on:0 "Title Intrigue: On"
+ ssc_settings.module.title_off:0 "Title Intrigue: Off"
+ ssc_settings.cap.county:0 "Title steal cap: County"
+ ssc_settings.cap.duchy:0 "Title steal cap: Duchy (High only)"
+
+ ssc_settings.opt.intensity_1:0 "Cycle intensity (now Low)"
+ ssc_settings.opt.intensity_2:0 "Cycle intensity (now Mid)"
+ ssc_settings.opt.intensity_3:0 "Cycle intensity (now High)"
+ ssc_settings.opt.turbo_on:0 "Toggle Tempo (now On)"
+ ssc_settings.opt.turbo_off:0 "Toggle Tempo (now Off)"
+ ssc_settings.opt.artifact_on:0 "Toggle Artifact Theft (now On)"
+ ssc_settings.opt.artifact_off:0 "Toggle Artifact Theft (now Off)"
+ ssc_settings.opt.title_on:0 "Toggle Title Intrigue (now On)"
+ ssc_settings.opt.title_off:0 "Toggle Title Intrigue (now Off)"
+ ssc_settings.opt.cap_county:0 "Cycle title cap (now County)"
+ ssc_settings.opt.cap_duchy:0 "Cycle title cap (now Duchy)"
+
+ ssc_settings.tt.intensity:0 "Cycles Low → Mid → High → Low and refreshes turbo modifiers"
+ ssc_settings.tt.turbo:0 "Turns character success/secrecy/slot package on or off"
+ ssc_settings.tt.artifact:0 "Shows or hides the Steal Artifact scheme"
+ ssc_settings.tt.title:0 "Shows or hides Fabricate Claim and Steal Title"
+ ssc_settings.tt.title_cap:0 "County vs duchy ceiling for Steal Title at High intensity"
+ ssc_settings.tt.close:0 "Close the hub"
+
+ # Game rules
+ rule_ssc_rule_intensity_default:0 "Supreme Schemes: Default Intensity"
+ setting_ssc_rule_intensity_default_low:0 "Low"
+ setting_ssc_rule_intensity_default_low_desc:0 "New schemers start at Low intensity (~14-day SSC phases)."
+ setting_ssc_rule_intensity_default_mid:0 "Mid"
+ setting_ssc_rule_intensity_default_mid_desc:0 "New schemers start at Mid intensity (~7-day SSC phases)."
+ setting_ssc_rule_intensity_default_high:0 "High"
+ setting_ssc_rule_intensity_default_high_desc:0 "New schemers start at High intensity (~3-day phases, near-guaranteed success). Blocks achievements."
+
+ rule_ssc_rule_granting:0 "Supreme Schemes: Granting"
+ setting_ssc_rule_granting_player_self:0 "Player self only"
+ setting_ssc_rule_granting_player_self_desc:0 "Only you may embrace Supreme Schemer via decision. Bestow interactions stay hidden."
+ setting_ssc_rule_granting_player_and_targets:0 "Player and targets"
+ setting_ssc_rule_granting_player_and_targets_desc:0 "Bestow/revoke interactions unlock for elevating others. Blocks achievements."
+ setting_ssc_rule_granting_disabled:0 "Disabled"
+ setting_ssc_rule_granting_disabled_desc:0 "No embrace decision or bestow. Existing traits can still be renounced if held."
+
+ rule_ssc_rule_module_turbo:0 "Supreme Schemes: Tempo Module"
+ setting_ssc_rule_module_turbo_on:0 "On"
+ setting_ssc_rule_module_turbo_on_desc:0 "Character turbo modifiers apply while you hold the trait. Blocks achievements."
+ setting_ssc_rule_module_turbo_off:0 "Off"
+ setting_ssc_rule_module_turbo_off_desc:0 "No turbo character package by default (hub can still enable)."
+
+ rule_ssc_rule_module_artifact_theft:0 "Supreme Schemes: Artifact Theft"
+ setting_ssc_rule_module_artifact_theft_on:0 "On"
+ setting_ssc_rule_module_artifact_theft_on_desc:0 "Steal Artifact scheme available. Blocks achievements."
+ setting_ssc_rule_module_artifact_theft_off:0 "Off"
+ setting_ssc_rule_module_artifact_theft_off_desc:0 "Artifact theft scheme hidden by default."
+
+ rule_ssc_rule_module_title_intrigue:0 "Supreme Schemes: Title Intrigue"
+ setting_ssc_rule_module_title_intrigue_on:0 "On"
+ setting_ssc_rule_module_title_intrigue_on_desc:0 "Fabricate Claim and Steal Title available. Blocks achievements."
+ setting_ssc_rule_module_title_intrigue_off:0 "Off"
+ setting_ssc_rule_module_title_intrigue_off_desc:0 "Title intrigue schemes hidden by default."
+
+ rule_ssc_rule_ai:0 "Supreme Schemes: AI"
+ setting_ssc_rule_ai_disabled:0 "Disabled"
+ setting_ssc_rule_ai_disabled_desc:0 "AI never starts Supreme Schemes schemes or receives AI bestow."
+ setting_ssc_rule_ai_follow_intensity:0 "Follow intensity"
+ setting_ssc_rule_ai_follow_intensity_desc:0 "AI may use SSC schemes when other gates allow. Blocks achievements."
+
+ rule_ssc_rule_title_steal_cap:0 "Supreme Schemes: Title Steal Cap"
+ setting_ssc_rule_title_steal_cap_county:0 "County"
+ setting_ssc_rule_title_steal_cap_county_desc:0 "Even at High intensity, Steal Title is capped at county."
+ setting_ssc_rule_title_steal_cap_duchy:0 "Duchy"
+ setting_ssc_rule_title_steal_cap_duchy_desc:0 "At High intensity, Steal Title may take duchies. Mid remains county-only. Blocks achievements."

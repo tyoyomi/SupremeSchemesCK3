@@ -1,0 +1,125 @@
+ssc_steal_title = {
+	skill = intrigue
+	desc = ssc_steal_title_desc
+	success_desc = ssc_steal_title_success_desc
+	discovery_desc = ssc_steal_title_discovery_desc
+	icon = icon_scheme_claim_throne
+	illustration = "gfx/interface/illustrations/event_scenes/corridor.dds"
+	category = hostile
+	target_type = title
+	is_secret = yes
+	maximum_breaches = 5
+	cooldown = { days = 30 }
+	uses_resistance = no
+
+	speed_per_skill_point = ssc_spsp_owner_value
+	speed_per_target_skill_point = ssc_spsp_target_value
+	target_spymaster_speed_per_skill_point = 0
+	base_progress_goal = ssc_phase_length_value
+	maximum_secrecy = 100
+	base_maximum_success = ssc_base_max_success_value
+	phases_per_agent_charge = 1
+	success_chance_growth_per_skill_point = ssc_scgpsp_value
+
+	allow = {
+		custom_tooltip = {
+			text = ssc_tt_need_schemer_steal_title
+			ssc_owner_can_run_steal_title_scheme = yes
+		}
+		custom_tooltip = {
+			text = ssc_tt_title_stealable
+			scope:target = {
+				ssc_title_is_stealable = yes
+				ssc_title_steal_leaves_holder_landed = yes
+			}
+		}
+	}
+
+	valid = {
+		is_incapable = no
+		ssc_module_title_on = yes
+		has_trait = ssc_supreme_schemer
+		NOT = { ssc_intensity_is_low = yes }
+		scope:target = {
+			ssc_title_is_stealable = yes
+			ssc_title_steal_leaves_holder_landed = yes
+		}
+	}
+
+	agent_leave_threshold = -25
+	agent_join_chance = {
+		base = 0
+		ai_agent_join_chance_basic_suite_modifier = yes
+		ai_agent_join_chance_hostile_title_modifier = yes
+	}
+	valid_agent = {
+		is_valid_agent_standard_trigger = yes
+		title_scheme_valid_agent_trigger = yes
+	}
+	agent_groups_owner_perspective = { courtiers guests scripted_relations puppets }
+
+	odds_prediction = {
+		add = base_odds_prediction_target_is_title_value
+		add = odds_skill_contribution_intrigue_value
+		add = 50
+		min = 0
+	}
+
+	base_success_chance = {
+		base = 0
+		scheme_type_skill_success_chance_modifier = { SKILL = INTRIGUE }
+		modifier = {
+			add = ssc_scheme_base_success_floor_value
+			desc = ssc_tt_need_schemer_steal_title
+			always = yes
+		}
+		compare_modifier = {
+			desc = SCHEME_MY_INTRIGUE
+			value = scope:owner.intrigue
+			multiplier = 2
+		}
+	}
+	base_secrecy = {
+		add = secrecy_base_value
+		add = 40
+	}
+
+	on_start = {
+		set_variable = {
+			name = apply_countermeasures
+			value = flag:indirect
+		}
+		if = {
+			limit = {
+				scheme_owner = {
+					NOT = { has_variable = agents_added }
+				}
+			}
+			add_agent_slot = agent_diplomat
+			add_agent_slot = agent_scribe
+			add_agent_slot = agent_infiltrator
+			add_agent_slot = agent_justiciar
+			add_agent_slot = agent_decoy
+		}
+	}
+
+	on_phase_completed = {
+		ssc_steal_title_scheme_ending_effect = yes
+	}
+
+	on_monthly = {
+		hostile_scheme_monthly_discovery_chance_effect = yes
+	}
+
+	on_invalidated = {
+		scheme_target_title = { save_scope_as = target }
+		scheme_owner = { save_scope_as = owner }
+		scope:owner = {
+			send_interface_toast = {
+				title = ssc_steal_title_invalidated_title
+				left_icon = scope:target
+				custom_tooltip = ssc_steal_title_invalidated_desc
+			}
+		}
+	}
+}

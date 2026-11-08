@@ -1,0 +1,508 @@
+# Supreme Schemes — scripted effects
+# Bestow expects this = recipient. Scheme outcomes expect scope:owner / scope:target / scope:scheme.
+
+### Defaults / refresh / cycle
+ssc_ensure_schemer_defaults_effect = {
+	if = {
+		limit = { NOT = { exists = var:ssc_cfg_intensity } }
+		if = {
+			limit = { has_game_rule = ssc_rule_intensity_default_low }
+			set_variable = { name = ssc_cfg_intensity value = 1 }
+		}
+		else_if = {
+			limit = { has_game_rule = ssc_rule_intensity_default_mid }
+			set_variable = { name = ssc_cfg_intensity value = 2 }
+		}
+		else = {
+			set_variable = { name = ssc_cfg_intensity value = 3 }
+		}
+	}
+	if = {
+		limit = { NOT = { exists = var:ssc_cfg_module_turbo } }
+		if = {
+			limit = { has_game_rule = ssc_rule_module_turbo_off }
+			set_variable = { name = ssc_cfg_module_turbo value = 0 }
+		}
+		else = {
+			set_variable = { name = ssc_cfg_module_turbo value = 1 }
+		}
+	}
+	if = {
+		limit = { NOT = { exists = var:ssc_cfg_module_artifact } }
+		if = {
+			limit = { has_game_rule = ssc_rule_module_artifact_theft_off }
+			set_variable = { name = ssc_cfg_module_artifact value = 0 }
+		}
+		else = {
+			set_variable = { name = ssc_cfg_module_artifact value = 1 }
+		}
+	}
+	if = {
+		limit = { NOT = { exists = var:ssc_cfg_module_title } }
+		if = {
+			limit = { has_game_rule = ssc_rule_module_title_intrigue_off }
+			set_variable = { name = ssc_cfg_module_title value = 0 }
+		}
+		else = {
+			set_variable = { name = ssc_cfg_module_title value = 1 }
+		}
+	}
+	if = {
+		limit = { NOT = { exists = var:ssc_cfg_title_cap } }
+		if = {
+			limit = { has_game_rule = ssc_rule_title_steal_cap_county }
+			set_variable = { name = ssc_cfg_title_cap value = 1 }
+		}
+		else = {
+			set_variable = { name = ssc_cfg_title_cap value = 2 }
+		}
+	}
+}
+
+ssc_clear_schemer_modifiers_effect = {
+	remove_character_modifier = ssc_turbo_low_modifier
+	remove_character_modifier = ssc_turbo_med_modifier
+	remove_character_modifier = ssc_turbo_high_modifier
+}
+
+ssc_refresh_schemer_modifiers_effect = {
+	ssc_clear_schemer_modifiers_effect = yes
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = {
+			has_trait = ssc_supreme_schemer
+			ssc_module_turbo_on = yes
+		}
+		if = {
+			limit = { var:ssc_cfg_intensity = 1 }
+			add_character_modifier = {
+				modifier = ssc_turbo_low_modifier
+				days = -1
+			}
+		}
+		else_if = {
+			limit = { var:ssc_cfg_intensity = 2 }
+			add_character_modifier = {
+				modifier = ssc_turbo_med_modifier
+				days = -1
+			}
+		}
+		else = {
+			add_character_modifier = {
+				modifier = ssc_turbo_high_modifier
+				days = -1
+			}
+		}
+	}
+}
+
+ssc_cycle_intensity_cfg_effect = {
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = { var:ssc_cfg_intensity = 1 }
+		set_variable = { name = ssc_cfg_intensity value = 2 }
+	}
+	else_if = {
+		limit = { var:ssc_cfg_intensity = 2 }
+		set_variable = { name = ssc_cfg_intensity value = 3 }
+	}
+	else = {
+		set_variable = { name = ssc_cfg_intensity value = 1 }
+	}
+	ssc_refresh_schemer_modifiers_effect = yes
+}
+
+ssc_cycle_module_turbo_cfg_effect = {
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = { var:ssc_cfg_module_turbo = 1 }
+		set_variable = { name = ssc_cfg_module_turbo value = 0 }
+	}
+	else = {
+		set_variable = { name = ssc_cfg_module_turbo value = 1 }
+	}
+	ssc_refresh_schemer_modifiers_effect = yes
+}
+
+ssc_cycle_module_artifact_cfg_effect = {
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = { var:ssc_cfg_module_artifact = 1 }
+		set_variable = { name = ssc_cfg_module_artifact value = 0 }
+	}
+	else = {
+		set_variable = { name = ssc_cfg_module_artifact value = 1 }
+	}
+}
+
+ssc_cycle_module_title_cfg_effect = {
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = { var:ssc_cfg_module_title = 1 }
+		set_variable = { name = ssc_cfg_module_title value = 0 }
+	}
+	else = {
+		set_variable = { name = ssc_cfg_module_title value = 1 }
+	}
+}
+
+ssc_cycle_title_cap_cfg_effect = {
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = { var:ssc_cfg_title_cap = 1 }
+		set_variable = { name = ssc_cfg_title_cap value = 2 }
+	}
+	else = {
+		set_variable = { name = ssc_cfg_title_cap value = 1 }
+	}
+}
+
+### Grant / revoke
+ssc_bestow_supreme_schemer_silent_effect = {
+	add_trait = ssc_supreme_schemer
+	ssc_ensure_schemer_defaults_effect = yes
+	ssc_refresh_schemer_modifiers_effect = yes
+}
+
+ssc_bestow_supreme_schemer_effect = {
+	ssc_bestow_supreme_schemer_silent_effect = yes
+	save_scope_as = ssc_schemer
+	trigger_event = ssc_events.1001
+}
+
+ssc_revoke_supreme_schemer_silent_effect = {
+	ssc_clear_schemer_modifiers_effect = yes
+	if = {
+		limit = { has_trait = ssc_supreme_schemer }
+		remove_trait = ssc_supreme_schemer
+	}
+}
+
+ssc_revoke_supreme_schemer_effect = {
+	ssc_revoke_supreme_schemer_silent_effect = yes
+	save_scope_as = ssc_schemer
+	trigger_event = ssc_events.1002
+}
+
+### Cooldown helpers (intensity-aware)
+ssc_apply_steal_artifact_cooldown_effect = {
+	# this = owner
+	if = {
+		limit = { var:ssc_cfg_intensity = 1 }
+		add_character_flag = {
+			flag = ssc_steal_artifact_cd
+			years = 1
+		}
+	}
+	else_if = {
+		limit = { var:ssc_cfg_intensity = 2 }
+		add_character_flag = {
+			flag = ssc_steal_artifact_cd
+			days = 180
+		}
+	}
+	else = {
+		add_character_flag = {
+			flag = ssc_steal_artifact_cd
+			days = 30
+		}
+	}
+}
+
+ssc_apply_fabricate_claim_cooldown_effect = {
+	if = {
+		limit = { var:ssc_cfg_intensity = 1 }
+		add_character_flag = {
+			flag = ssc_fabricate_claim_cd
+			days = 180
+		}
+	}
+	else_if = {
+		limit = { var:ssc_cfg_intensity = 2 }
+		add_character_flag = {
+			flag = ssc_fabricate_claim_cd
+			days = 90
+		}
+	}
+	else = {
+		add_character_flag = {
+			flag = ssc_fabricate_claim_cd
+			days = 30
+		}
+	}
+}
+
+ssc_apply_steal_title_cooldown_effect = {
+	if = {
+		limit = { var:ssc_cfg_intensity = 2 }
+		add_character_flag = {
+			flag = ssc_steal_title_cd
+			days = 180
+		}
+	}
+	else = {
+		add_character_flag = {
+			flag = ssc_steal_title_cd
+			days = 60
+		}
+	}
+}
+
+### Artifact pick / transfer
+ssc_pick_default_artifact_effect = {
+	# root/scheme context: expects scope:scheme and scope:target
+	scope:target = {
+		random_character_artifact = {
+			weight = {
+				base = 1
+				modifier = {
+					add = 100
+					rarity = illustrious
+				}
+				modifier = {
+					add = 50
+					rarity = famed
+				}
+				modifier = {
+					add = 25
+					rarity = masterwork
+				}
+			}
+			save_scope_as = artifact
+		}
+	}
+	if = {
+		limit = { exists = scope:artifact }
+		scope:scheme = {
+			set_variable = {
+				name = target_artifact
+				value = scope:artifact
+			}
+		}
+	}
+}
+
+ssc_transfer_stolen_artifact_effect = {
+	# expects scope:owner, scope:target, scope:artifact
+	if = {
+		limit = {
+			exists = scope:artifact
+			exists = scope:owner
+			exists = scope:target
+		}
+		steal_artifact_in_event_effect = {
+			THIEF = scope:owner
+			VICTIM = scope:target
+			ARTIFACT = scope:artifact
+		}
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = stole_artifact_from_me
+			}
+		}
+		scope:owner = {
+			ssc_apply_steal_artifact_cooldown_effect = yes
+			trigger_event = ssc_events.2001
+		}
+	}
+}
+
+ssc_apply_fabricated_claim_effect = {
+	# expects scope:owner, scope:target (title)
+	if = {
+		limit = {
+			exists = scope:owner
+			exists = scope:target
+		}
+		if = {
+			limit = { scope:owner = { ssc_intensity_is_low = yes } }
+			scope:owner = {
+				add_unpressed_claim = scope:target
+			}
+		}
+		else = {
+			scope:owner = {
+				add_pressed_claim = scope:target
+			}
+		}
+		if = {
+			limit = { exists = scope:target.holder }
+			scope:target.holder = {
+				add_opinion = {
+					target = scope:owner
+					modifier = ssc_fabricated_claim_opinion
+				}
+			}
+		}
+		scope:owner = {
+			ssc_apply_fabricate_claim_cooldown_effect = yes
+			trigger_event = ssc_events.3001
+		}
+	}
+}
+
+ssc_transfer_stolen_title_effect = {
+	# expects scope:owner, scope:target (title)
+	if = {
+		limit = {
+			exists = scope:owner
+			exists = scope:target
+			scope:target = {
+				ssc_title_is_stealable = yes
+				ssc_title_steal_leaves_holder_landed = yes
+			}
+		}
+		scope:target.holder = { save_scope_as = ssc_former_holder }
+		create_title_and_vassal_change = {
+			type = conquest
+			save_scope_as = ssc_title_change
+			add_claim_on_loss = yes
+		}
+		scope:target = {
+			change_title_holder = {
+				holder = scope:owner
+				change = scope:ssc_title_change
+			}
+		}
+		resolve_title_and_vassal_change = scope:ssc_title_change
+		if = {
+			limit = { exists = scope:ssc_former_holder }
+			scope:ssc_former_holder = {
+				add_opinion = {
+					target = scope:owner
+					modifier = ssc_stolen_title_opinion
+				}
+			}
+		}
+		scope:owner = {
+			ssc_apply_steal_title_cooldown_effect = yes
+			trigger_event = ssc_events.3101
+		}
+	}
+}
+
+### Scheme ending helpers
+ssc_scheme_roll_success_effect = {
+	# root = scheme; sets scope:scheme_successful on success
+	if = {
+		limit = {
+			scheme_owner = { ssc_intensity_is_high = yes }
+		}
+		save_scope_value_as = {
+			name = scheme_successful
+			value = yes
+		}
+	}
+	else = {
+		random = {
+			chance = scheme_success_chance
+			save_scope_value_as = {
+				name = scheme_successful
+				value = yes
+			}
+		}
+	}
+}
+
+ssc_steal_artifact_scheme_ending_effect = {
+	save_scope_as = scheme
+	scheme_owner = { save_scope_as = owner }
+	scheme_target_character = { save_scope_as = target }
+	if = {
+		limit = {
+			exists = var:target_artifact
+		}
+		var:target_artifact = { save_scope_as = artifact }
+	}
+	else = {
+		ssc_pick_default_artifact_effect = yes
+	}
+	ssc_scheme_roll_success_effect = yes
+	if = {
+		limit = { exists = scope:scheme_successful }
+		ssc_transfer_stolen_artifact_effect = yes
+	}
+	else = {
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = ssc_attempted_scheme_opinion
+			}
+			add_character_modifier = {
+				modifier = watchful_modifier
+				days = 365
+			}
+		}
+		scope:owner = {
+			ssc_apply_steal_artifact_cooldown_effect = yes
+			trigger_event = ssc_events.2002
+		}
+	}
+	end_scheme = yes
+}
+
+ssc_fabricate_title_claim_scheme_ending_effect = {
+	save_scope_as = scheme
+	scheme_owner = { save_scope_as = owner }
+	scheme_target_title = { save_scope_as = target }
+	ssc_scheme_roll_success_effect = yes
+	if = {
+		limit = { exists = scope:scheme_successful }
+		ssc_apply_fabricated_claim_effect = yes
+	}
+	else = {
+		if = {
+			limit = { exists = scope:target.holder }
+			scope:target.holder = {
+				add_opinion = {
+					target = scope:owner
+					modifier = ssc_attempted_scheme_opinion
+				}
+			}
+		}
+		scope:owner = {
+			ssc_apply_fabricate_claim_cooldown_effect = yes
+			trigger_event = ssc_events.3002
+		}
+	}
+	end_scheme = yes
+}
+
+ssc_steal_title_scheme_ending_effect = {
+	save_scope_as = scheme
+	scheme_owner = { save_scope_as = owner }
+	scheme_target_title = { save_scope_as = target }
+	ssc_scheme_roll_success_effect = yes
+	if = {
+		limit = { exists = scope:scheme_successful }
+		ssc_transfer_stolen_title_effect = yes
+	}
+	else = {
+		if = {
+			limit = { exists = scope:target.holder }
+			scope:target.holder = {
+				add_opinion = {
+					target = scope:owner
+					modifier = ssc_attempted_scheme_opinion
+				}
+			}
+		}
+		scope:owner = {
+			ssc_apply_steal_title_cooldown_effect = yes
+			trigger_event = ssc_events.3102
+		}
+	}
+	end_scheme = yes
+}
+
+ssc_set_scheme_artifact_target_effect = {
+	# this = artifact; expects scope:scheme
+	save_scope_as = artifact
+	scope:scheme = {
+		set_variable = {
+			name = target_artifact
+			value = scope:artifact
+		}
+	}
+}

@@ -1,0 +1,112 @@
+ssc_rule_intensity_default = {
+	categories = {
+		tweaks
+	}
+
+	default = ssc_rule_intensity_default_high
+
+	ssc_rule_intensity_default_low = {
+	}
+
+	ssc_rule_intensity_default_mid = {
+	}
+
+	ssc_rule_intensity_default_high = {
+		flag = blocks_achievements
+	}
+}
+
+ssc_rule_granting = {
+	categories = {
+		tweaks
+		ai
+	}
+
+	default = ssc_rule_granting_player_self
+
+	ssc_rule_granting_player_self = {
+	}
+
+	ssc_rule_granting_player_and_targets = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_granting_disabled = {
+	}
+}
+
+ssc_rule_module_turbo = {
+	categories = {
+		tweaks
+	}
+
+	default = ssc_rule_module_turbo_on
+
+	ssc_rule_module_turbo_on = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_module_turbo_off = {
+	}
+}
+
+ssc_rule_module_artifact_theft = {
+	categories = {
+		tweaks
+	}
+
+	default = ssc_rule_module_artifact_theft_on
+
+	ssc_rule_module_artifact_theft_on = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_module_artifact_theft_off = {
+	}
+}
+
+ssc_rule_module_title_intrigue = {
+	categories = {
+		tweaks
+	}
+
+	default = ssc_rule_module_title_intrigue_on
+
+	ssc_rule_module_title_intrigue_on = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_module_title_intrigue_off = {
+	}
+}
+
+ssc_rule_ai = {
+	categories = {
+		tweaks
+		ai
+	}
+
+	default = ssc_rule_ai_disabled
+
+	ssc_rule_ai_disabled = {
+	}
+
+	ssc_rule_ai_follow_intensity = {
+		flag = blocks_achievements
+	}
+}
+
+ssc_rule_title_steal_cap = {
+	categories = {
+		tweaks
+	}
+
+	default = ssc_rule_title_steal_cap_duchy
+
+	ssc_rule_title_steal_cap_county = {
+	}
+
+	ssc_rule_title_steal_cap_duchy = {
+		flag = blocks_achievements
+	}
+}

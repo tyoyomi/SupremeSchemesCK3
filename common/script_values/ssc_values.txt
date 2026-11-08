@@ -1,0 +1,69 @@
+# Supreme Schemes — intensity-aware scheme tunables (scope:owner when available)
+
+ssc_phase_length_value = {
+	value = 3
+	if = {
+		limit = {
+			exists = scope:owner
+			scope:owner = { exists = var:ssc_cfg_intensity }
+		}
+		if = {
+			limit = { scope:owner = { var:ssc_cfg_intensity = 1 } }
+			set = 14
+		}
+		else_if = {
+			limit = { scope:owner = { var:ssc_cfg_intensity = 2 } }
+			set = 7
+		}
+		else = {
+			set = 3
+		}
+	}
+}
+
+ssc_base_max_success_value = {
+	value = 100
+	if = {
+		limit = {
+			exists = scope:owner
+			scope:owner = { exists = var:ssc_cfg_intensity }
+		}
+		if = {
+			limit = { scope:owner = { var:ssc_cfg_intensity = 1 } }
+			set = 85
+		}
+		else_if = {
+			limit = { scope:owner = { var:ssc_cfg_intensity = 2 } }
+			set = 95
+		}
+		else = {
+			set = 100
+		}
+	}
+}
+
+ssc_scheme_base_success_floor_value = {
+	value = 75
+	if = {
+		limit = {
+			exists = scope:owner
+			scope:owner = { exists = var:ssc_cfg_intensity }
+		}
+		if = {
+			limit = { scope:owner = { var:ssc_cfg_intensity = 1 } }
+			set = 40
+		}
+		else_if = {
+			limit = { scope:owner = { var:ssc_cfg_intensity = 2 } }
+			set = 60
+		}
+		else = {
+			set = 85
+		}
+	}
+}
+
+# Aggressive phase shortening so SSC schemes finish in days even with resistance
+ssc_spsp_owner_value = -2
+ssc_spsp_target_value = 0
+ssc_scgpsp_value = 1

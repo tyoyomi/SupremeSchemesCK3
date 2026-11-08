@@ -1,0 +1,14 @@
+# Supreme Schemes — append-only hooks (refresh turbo if somehow cleared)
+
+on_death = {
+	on_actions = { ssc_on_death }
+}
+
+ssc_on_death = {
+	trigger = {
+		has_trait = ssc_supreme_schemer
+	}
+	effect = {
+		ssc_clear_schemer_modifiers_effect = yes
+	}
+}
