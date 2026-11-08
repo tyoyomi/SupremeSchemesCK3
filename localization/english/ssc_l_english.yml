@@ -42,6 +42,15 @@
 
  ssc_revoke_supreme_schemer_interaction:0 "Revoke Supreme Schemer"
  ssc_revoke_supreme_schemer_interaction_desc:0 "Strip [recipient.GetShortUIName] of the Supreme Schemer honor."
+ # Strong hook demand
+ ssc_demand_strong_hook_interaction:0 "Demand Strong Hook"
+ ssc_demand_strong_hook_interaction_desc:0 "As Supreme Sovereign, compel a strong favor hook on [recipient.GetShortUIName] toward you. Auto-accepts. No cooldown. Player-only."
+ ssc_demand_strong_hook_interaction_extra_icon:0 "$ssc_demand_strong_hook_interaction$"
+ ssc_tt_actor_may_demand_strong_hook:0 "You are a player Supreme Sovereign"
+ ssc_tt_can_add_strong_hook:0 "You can take a strong favor hook on them"
+ ssc_tt_can_receive_strong_hook_demand:0 "They may receive this demand"
+ ssc_demand_strong_hook_toast_title:0 "Strong Hook Secured"
+ ssc_demand_strong_hook_toast_tt:0 "You hold a strong favor hook on them"
 
  # Tooltips
  ssc_tt_can_embrace:0 "You may embrace Supreme Schemes"

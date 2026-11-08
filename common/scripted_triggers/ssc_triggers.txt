@@ -4,6 +4,22 @@ ssc_is_supreme_schemer = {
 	has_trait = ssc_supreme_schemer
 }
 
+# Soft peer: Supreme Sovereign trait key. Fails closed if SS is absent (may log once).
+ssc_character_is_supreme_sovereign = {
+	has_trait = Supreme_Sovereign
+}
+
+ssc_can_demand_strong_hook_actor = {
+	is_alive = yes
+	is_ai = no
+	ssc_character_is_supreme_sovereign = yes
+}
+
+ssc_can_receive_strong_hook_demand = {
+	is_alive = yes
+	NOT = { this = scope:actor }
+}
+
 ssc_granting_disabled = {
 	has_game_rule = ssc_rule_granting_disabled
 }

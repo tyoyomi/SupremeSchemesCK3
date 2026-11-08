@@ -506,3 +506,26 @@ ssc_set_scheme_artifact_target_effect = {
 		}
 	}
 }
+
+### Strong hook demand (player Supreme Sovereign -> recipient)
+# Expects this = actor; scope:recipient = target.
+ssc_demand_strong_hook_effect = {
+	if = {
+		limit = {
+			can_add_hook = {
+				type = strong_favor_hook
+				target = scope:recipient
+			}
+		}
+		add_hook = {
+			type = strong_favor_hook
+			target = scope:recipient
+		}
+		send_interface_toast = {
+			type = event_toast_effect_good
+			title = ssc_demand_strong_hook_toast_title
+			left_icon = scope:recipient
+			custom_tooltip = ssc_demand_strong_hook_toast_tt
+		}
+	}
+}
