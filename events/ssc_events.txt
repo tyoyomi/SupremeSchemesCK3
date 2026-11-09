@@ -248,3 +248,193 @@ ssc_events.4001 = {
 		ssc_clear_fabricate_hook_cooldown_effect = yes
 	}
 }
+
+# M5 — Abduct success
+ssc_events.5001 = {
+	type = character_event
+	title = ssc_events.5001.t
+	desc = ssc_events.5001.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+	lower_right_portrait = scope:target
+
+	option = {
+		name = ssc_events.5001.a
+	}
+}
+
+# M5 — Abduct fail
+ssc_events.5002 = {
+	type = character_event
+	title = ssc_events.5002.t
+	desc = ssc_events.5002.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = dismissal
+	}
+	lower_right_portrait = scope:target
+
+	option = {
+		name = ssc_events.5002.a
+	}
+}
+
+# M5 — Force Contract spouse picker (on scheme start, player)
+ssc_events.5101 = {
+	type = character_event
+	title = ssc_events.5101.t
+	desc = ssc_events.5101.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+	lower_right_portrait = scope:target
+
+	immediate = {
+		if = {
+			limit = { NOT = { exists = scope:scheme } }
+			random_scheme = {
+				limit = { scheme_type = ssc_force_contract }
+				save_scope_as = scheme
+			}
+		}
+		if = {
+			limit = { NOT = { exists = scope:target } }
+			random_scheme = {
+				limit = { scheme_type = ssc_force_contract }
+				scheme_target_character = { save_scope_as = target }
+				save_scope_as = scheme
+			}
+		}
+	}
+
+	option = {
+		name = ssc_events.5101.a
+		custom_tooltip = ssc_events.5101.a.tt
+		trigger = {
+			is_married = no
+			exists = scope:target
+			can_marry_character = scope:target
+			scope:target = {
+				is_married = no
+				can_marry_character = root
+			}
+		}
+		if = {
+			limit = { exists = scope:scheme }
+			scope:scheme = {
+				set_variable = {
+					name = ssc_contract_spouse
+					value = root
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ssc_events.5101.b
+		custom_tooltip = ssc_events.5101.b.tt
+		random_courtier = {
+			limit = {
+				is_alive = yes
+				is_adult = yes
+				is_married = no
+				exists = scope:target
+				can_marry_character = scope:target
+				scope:target = { can_marry_character = prev }
+			}
+			save_scope_as = ssc_contract_spouse
+		}
+		if = {
+			limit = {
+				exists = scope:scheme
+				exists = scope:ssc_contract_spouse
+			}
+			scope:scheme = {
+				set_variable = {
+					name = ssc_contract_spouse
+					value = scope:ssc_contract_spouse
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ssc_events.5101.c
+		custom_tooltip = ssc_events.5101.c.tt
+		# Leave unset — success path auto-picks best eligible
+	}
+}
+
+# M5 — Force Contract success
+ssc_events.5102 = {
+	type = character_event
+	title = ssc_events.5102.t
+	desc = ssc_events.5102.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	lower_right_portrait = scope:target
+
+	option = {
+		name = ssc_events.5102.a
+	}
+}
+
+# M5 — Force Contract fail
+ssc_events.5103 = {
+	type = character_event
+	title = ssc_events.5103.t
+	desc = ssc_events.5103.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = dismissal
+	}
+	lower_right_portrait = scope:target
+
+	option = {
+		name = ssc_events.5103.a
+	}
+}
+
+# M5 — Smear success
+ssc_events.5201 = {
+	type = character_event
+	title = ssc_events.5201.t
+	desc = ssc_events.5201.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+	lower_right_portrait = scope:target
+
+	option = {
+		name = ssc_events.5201.a
+	}
+}
+
+# M5 — Smear fail
+ssc_events.5202 = {
+	type = character_event
+	title = ssc_events.5202.t
+	desc = ssc_events.5202.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = dismissal
+	}
+	lower_right_portrait = scope:target
+
+	option = {
+		name = ssc_events.5202.a
+	}
+}

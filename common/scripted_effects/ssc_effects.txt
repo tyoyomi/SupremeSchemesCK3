@@ -58,6 +58,29 @@ ssc_ensure_schemer_defaults_effect = {
 		}
 	}
 	if = {
+		limit = { NOT = { exists = var:ssc_cfg_module_verb_pack_2 } }
+		if = {
+			limit = { has_game_rule = ssc_rule_module_verb_pack_2_off }
+			set_variable = { name = ssc_cfg_module_verb_pack_2 value = 0 }
+		}
+		else = {
+			set_variable = { name = ssc_cfg_module_verb_pack_2 value = 1 }
+		}
+	}
+	# Auto-hook scopes: missing = Off (opt-in)
+	if = {
+		limit = { NOT = { exists = var:ssc_cfg_auto_hooks_courtiers } }
+		set_variable = { name = ssc_cfg_auto_hooks_courtiers value = 0 }
+	}
+	if = {
+		limit = { NOT = { exists = var:ssc_cfg_auto_hooks_barons } }
+		set_variable = { name = ssc_cfg_auto_hooks_barons value = 0 }
+	}
+	if = {
+		limit = { NOT = { exists = var:ssc_cfg_auto_hooks_prisoners } }
+		set_variable = { name = ssc_cfg_auto_hooks_prisoners value = 0 }
+	}
+	if = {
 		limit = { NOT = { exists = var:ssc_cfg_title_cap } }
 		if = {
 			limit = { has_game_rule = ssc_rule_title_steal_cap_county }
@@ -174,6 +197,51 @@ ssc_cycle_module_auto_hooks_cfg_effect = {
 		set_variable = { name = ssc_cfg_module_auto_hooks value = 1 }
 	}
 }
+
+ssc_cycle_module_verb_pack_2_cfg_effect = {
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = { var:ssc_cfg_module_verb_pack_2 = 1 }
+		set_variable = { name = ssc_cfg_module_verb_pack_2 value = 0 }
+	}
+	else = {
+		set_variable = { name = ssc_cfg_module_verb_pack_2 value = 1 }
+	}
+}
+
+ssc_cycle_auto_hooks_courtiers_cfg_effect = {
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = { var:ssc_cfg_auto_hooks_courtiers = 1 }
+		set_variable = { name = ssc_cfg_auto_hooks_courtiers value = 0 }
+	}
+	else = {
+		set_variable = { name = ssc_cfg_auto_hooks_courtiers value = 1 }
+	}
+}
+
+ssc_cycle_auto_hooks_barons_cfg_effect = {
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = { var:ssc_cfg_auto_hooks_barons = 1 }
+		set_variable = { name = ssc_cfg_auto_hooks_barons value = 0 }
+	}
+	else = {
+		set_variable = { name = ssc_cfg_auto_hooks_barons value = 1 }
+	}
+}
+
+ssc_cycle_auto_hooks_prisoners_cfg_effect = {
+	ssc_ensure_schemer_defaults_effect = yes
+	if = {
+		limit = { var:ssc_cfg_auto_hooks_prisoners = 1 }
+		set_variable = { name = ssc_cfg_auto_hooks_prisoners value = 0 }
+	}
+	else = {
+		set_variable = { name = ssc_cfg_auto_hooks_prisoners value = 1 }
+	}
+}
+
 
 ssc_cycle_title_cap_cfg_effect = {
 	ssc_ensure_schemer_defaults_effect = yes
@@ -833,6 +901,664 @@ ssc_queue_fabricate_hook_cooldown_clear_effect = {
 		trigger_event = {
 			id = ssc_events.4001
 			days = 1
+		}
+	}
+}
+
+
+### M5 Verb Pack 2 — cooldowns / success / endings
+ssc_apply_abduct_cooldown_effect = {
+	if = {
+		limit = { var:ssc_cfg_intensity = 1 }
+		add_character_flag = { flag = ssc_abduct_cd years = 1 }
+	}
+	else_if = {
+		limit = { var:ssc_cfg_intensity = 2 }
+		add_character_flag = { flag = ssc_abduct_cd days = 180 }
+	}
+	else = {
+		add_character_flag = { flag = ssc_abduct_cd days = 30 }
+	}
+}
+
+ssc_apply_force_contract_cooldown_effect = {
+	if = {
+		limit = { var:ssc_cfg_intensity = 1 }
+		add_character_flag = { flag = ssc_force_contract_cd years = 1 }
+	}
+	else_if = {
+		limit = { var:ssc_cfg_intensity = 2 }
+		add_character_flag = { flag = ssc_force_contract_cd days = 180 }
+	}
+	else = {
+		add_character_flag = { flag = ssc_force_contract_cd days = 30 }
+	}
+}
+
+ssc_apply_smear_cooldown_effect = {
+	if = {
+		limit = { var:ssc_cfg_intensity = 1 }
+		add_character_flag = { flag = ssc_smear_cd years = 1 }
+	}
+	else_if = {
+		limit = { var:ssc_cfg_intensity = 2 }
+		add_character_flag = { flag = ssc_smear_cd days = 180 }
+	}
+	else = {
+		add_character_flag = { flag = ssc_smear_cd days = 30 }
+	}
+}
+
+ssc_abduct_success_effect = {
+	# expects scope:owner / scope:target
+	if = {
+		limit = {
+			exists = scope:owner
+			exists = scope:target
+			scope:target = { is_alive = yes is_imprisoned = no }
+		}
+		scope:owner = {
+			imprison = scope:target
+		}
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = ssc_abducted_opinion
+			}
+		}
+		scope:owner = {
+			ssc_apply_abduct_cooldown_effect = yes
+			trigger_event = ssc_events.5001
+		}
+	}
+}
+
+ssc_abduct_scheme_ending_effect = {
+	save_scope_as = scheme
+	scheme_owner = { save_scope_as = owner }
+	scheme_target_character = { save_scope_as = target }
+	ssc_scheme_roll_success_effect = yes
+	if = {
+		limit = { exists = scope:scheme_successful }
+		ssc_abduct_success_effect = yes
+	}
+	else = {
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = ssc_attempted_scheme_opinion
+			}
+		}
+		scope:owner = {
+			ssc_apply_abduct_cooldown_effect = yes
+			trigger_event = ssc_events.5002
+		}
+	}
+	end_scheme = yes
+}
+
+# Pick a spouse for forced contract: prefer saved scheme var, else owner, else court/family
+ssc_pick_force_contract_spouse_effect = {
+	# expects scope:owner / scope:target (reluctant)
+	if = {
+		limit = {
+			exists = scope:scheme
+			scope:scheme = { exists = var:ssc_contract_spouse }
+		}
+		scope:scheme = {
+			var:ssc_contract_spouse = { save_scope_as = ssc_contract_spouse }
+		}
+	}
+	else_if = {
+		limit = {
+			scope:owner = {
+				is_married = no
+				can_marry_character = scope:target
+			}
+			scope:target = {
+				is_married = no
+				can_marry_character = scope:owner
+			}
+		}
+		scope:owner = { save_scope_as = ssc_contract_spouse }
+	}
+	else = {
+		scope:owner = {
+			random_courtier = {
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					is_married = no
+					can_marry_character = scope:target
+					scope:target = { can_marry_character = prev }
+				}
+				save_scope_as = ssc_contract_spouse
+			}
+		}
+		if = {
+			limit = { NOT = { exists = scope:ssc_contract_spouse } }
+			scope:owner = {
+				random_close_family_member = {
+					limit = {
+						is_alive = yes
+						is_adult = yes
+						is_married = no
+						can_marry_character = scope:target
+						scope:target = { can_marry_character = prev }
+					}
+					save_scope_as = ssc_contract_spouse
+				}
+			}
+		}
+	}
+}
+
+ssc_force_contract_success_effect = {
+	# expects scope:owner / scope:target
+	ssc_pick_force_contract_spouse_effect = yes
+	if = {
+		limit = {
+			exists = scope:ssc_contract_spouse
+			scope:target = { is_married = no }
+			scope:ssc_contract_spouse = { is_married = no }
+		}
+		scope:ssc_contract_spouse = {
+			marry = scope:target
+		}
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = ssc_forced_contract_opinion
+			}
+			add_character_modifier = {
+				modifier = ssc_forced_contract_modifier
+				years = 10
+			}
+		}
+		scope:owner = {
+			ssc_apply_force_contract_cooldown_effect = yes
+			trigger_event = ssc_events.5102
+		}
+	}
+	else = {
+		scope:owner = {
+			ssc_apply_force_contract_cooldown_effect = yes
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				title = ssc_force_contract_no_match_title
+				left_icon = scope:target
+				custom_tooltip = ssc_force_contract_no_match_tt
+			}
+		}
+	}
+}
+
+ssc_force_contract_scheme_ending_effect = {
+	save_scope_as = scheme
+	scheme_owner = { save_scope_as = owner }
+	scheme_target_character = { save_scope_as = target }
+	ssc_scheme_roll_success_effect = yes
+	if = {
+		limit = { exists = scope:scheme_successful }
+		ssc_force_contract_success_effect = yes
+	}
+	else = {
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = ssc_attempted_scheme_opinion
+			}
+		}
+		scope:owner = {
+			ssc_apply_force_contract_cooldown_effect = yes
+			trigger_event = ssc_events.5103
+		}
+	}
+	end_scheme = yes
+}
+
+ssc_smear_success_effect = {
+	# expects scope:owner / scope:target
+	if = {
+		limit = {
+			exists = scope:owner
+			exists = scope:target
+		}
+		scope:target = {
+			remove_character_modifier = ssc_smeared_modifier
+			if = {
+				limit = { scope:owner = { ssc_intensity_is_low = yes } }
+				add_character_modifier = {
+					modifier = ssc_smeared_modifier
+					years = 2
+				}
+			}
+			else_if = {
+				limit = { scope:owner = { ssc_intensity_is_mid = yes } }
+				add_character_modifier = {
+					modifier = ssc_smeared_modifier
+					years = 5
+				}
+			}
+			else = {
+				add_character_modifier = {
+					modifier = ssc_smeared_modifier
+					years = 10
+				}
+			}
+			add_prestige = ssc_smear_prestige_loss_value
+			add_opinion = {
+				target = scope:owner
+				modifier = ssc_smeared_by_me_opinion
+			}
+		}
+		# Broad court chill toward the smeared target (bound: owner's courtiers + vassals)
+		scope:owner = {
+			every_courtier = {
+				limit = {
+					is_alive = yes
+					NOT = { this = scope:target }
+					NOT = { this = scope:owner }
+				}
+				add_opinion = {
+					target = scope:target
+					modifier = ssc_smeared_opinion
+				}
+			}
+			every_vassal = {
+				limit = {
+					is_alive = yes
+					NOT = { this = scope:target }
+				}
+				add_opinion = {
+					target = scope:target
+					modifier = ssc_smeared_opinion
+				}
+			}
+			ssc_apply_smear_cooldown_effect = yes
+			trigger_event = ssc_events.5201
+		}
+	}
+}
+
+ssc_smear_scheme_ending_effect = {
+	save_scope_as = scheme
+	scheme_owner = { save_scope_as = owner }
+	scheme_target_character = { save_scope_as = target }
+	ssc_scheme_roll_success_effect = yes
+	if = {
+		limit = { exists = scope:scheme_successful }
+		ssc_smear_success_effect = yes
+	}
+	else = {
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = ssc_attempted_scheme_opinion
+			}
+		}
+		scope:owner = {
+			ssc_apply_smear_cooldown_effect = yes
+			trigger_event = ssc_events.5202
+		}
+	}
+	end_scheme = yes
+}
+
+### M6 Hook Economy — pay / verbs
+# Expects this = payer; scope:ssc_he_target set. Prefer hook; else Influence.
+ssc_he_pay_cost_effect = {
+	if = {
+		limit = { ssc_has_strong_usable_hook_on_he_target = yes }
+		use_hook = scope:ssc_he_target
+	}
+	else_if = {
+		limit = { ssc_can_pay_influence_alternate = yes }
+		# Flat Influence sink (script value); soft peer to SS Influence gain only
+		change_influence = {
+			value = -150
+		}
+	}
+}
+
+# Explicit Influence-only pay (board alternate option)
+ssc_he_pay_influence_only_effect = {
+	if = {
+		limit = { ssc_can_pay_influence_alternate = yes }
+		change_influence = {
+			value = -150
+		}
+	}
+}
+
+ssc_he_pay_hook_only_effect = {
+	if = {
+		limit = { ssc_has_strong_usable_hook_on_he_target = yes }
+		use_hook = scope:ssc_he_target
+	}
+}
+
+ssc_he_rewrite_contract_effect = {
+	# this = actor; scope:recipient OR scope:ssc_he_target = vassal
+	if = {
+		limit = { exists = scope:recipient }
+		scope:recipient = { save_scope_as = ssc_he_target }
+	}
+	if = {
+		limit = {
+			exists = scope:ssc_he_target
+			scope:ssc_he_target = {
+				is_alive = yes
+				is_vassal_of = prev
+			}
+			ssc_can_pay_he_cost = yes
+		}
+		ssc_he_pay_cost_effect = yes
+		scope:ssc_he_target = {
+			add_character_modifier = {
+				modifier = ssc_he_rewritten_contract_modifier
+				years = 20
+			}
+			add_opinion = {
+				target = prev
+				modifier = ssc_he_contract_rewritten_opinion
+			}
+		}
+		send_interface_toast = {
+			type = event_toast_effect_good
+			title = ssc_he_rewrite_contract_toast_title
+			left_icon = scope:ssc_he_target
+			custom_tooltip = ssc_he_rewrite_contract_toast_tt
+		}
+	}
+}
+
+ssc_he_force_vote_effect = {
+	if = {
+		limit = { exists = scope:recipient }
+		scope:recipient = { save_scope_as = ssc_he_target }
+	}
+	if = {
+		limit = {
+			exists = scope:ssc_he_target
+			ssc_can_pay_he_cost = yes
+		}
+		ssc_he_pay_cost_effect = yes
+		scope:ssc_he_target = {
+			add_character_modifier = {
+				modifier = ssc_whipped_vote_modifier
+				years = 5
+			}
+			add_opinion = {
+				target = prev
+				modifier = ssc_he_whipped_vote_opinion
+			}
+			# If they are in a faction, leave (bound leave; no realm scan)
+			if = {
+				limit = { exists = faction }
+				leave_faction = yes
+			}
+		}
+		send_interface_toast = {
+			type = event_toast_effect_good
+			title = ssc_he_force_vote_toast_title
+			left_icon = scope:ssc_he_target
+			custom_tooltip = ssc_he_force_vote_toast_tt
+		}
+	}
+}
+
+ssc_he_buy_pact_approval_effect = {
+	# this = dynasty head; scope:ssc_he_target = objector
+	if = {
+		limit = { exists = scope:recipient }
+		scope:recipient = { save_scope_as = ssc_he_target }
+	}
+	if = {
+		limit = {
+			exists = scope:ssc_he_target
+			ssc_can_pay_he_cost = yes
+		}
+		ssc_he_pay_cost_effect = yes
+		save_scope_as = ssc_pact_head
+		scope:ssc_he_target = {
+			add_opinion = {
+				target = scope:ssc_pact_head
+				modifier = ssc_he_pact_approval_opinion
+			}
+		}
+		send_interface_toast = {
+			type = event_toast_effect_good
+			title = ssc_he_buy_pact_toast_title
+			left_icon = scope:ssc_he_target
+			custom_tooltip = ssc_he_buy_pact_toast_tt
+		}
+	}
+}
+
+# Mass buy all objectors (bound dynasty list; cap 10)
+ssc_he_buy_all_pact_approvals_effect = {
+	save_scope_as = ssc_pact_head
+	set_variable = { name = ssc_he_pact_buy_count value = 0 }
+	every_dynasty_member = {
+		limit = {
+			ssc_is_su_pact_objector = yes
+			scope:ssc_pact_head = {
+				OR = {
+					has_strong_usable_hook = prev
+					ssc_can_pay_influence_alternate = yes
+				}
+			}
+			scope:ssc_pact_head = { var:ssc_he_pact_buy_count < 10 }
+		}
+		save_scope_as = ssc_he_target
+		scope:ssc_pact_head = {
+			if = {
+				limit = { has_strong_usable_hook = scope:ssc_he_target }
+				use_hook = scope:ssc_he_target
+			}
+			else_if = {
+				limit = { ssc_can_pay_influence_alternate = yes }
+				ssc_he_pay_influence_only_effect = yes
+			}
+			change_variable = { name = ssc_he_pact_buy_count add = 1 }
+		}
+		add_opinion = {
+			target = scope:ssc_pact_head
+			modifier = ssc_he_pact_approval_opinion
+		}
+	}
+	if = {
+		limit = { var:ssc_he_pact_buy_count > 0 }
+		send_interface_toast = {
+			type = event_toast_effect_good
+			title = ssc_he_buy_all_pact_toast_title
+			left_icon = root
+			custom_tooltip = ssc_he_buy_all_pact_toast_tt
+		}
+	}
+}
+
+ssc_he_silence_faction_effect = {
+	# this = actor; scope:ssc_he_target = faction leader (preferred) or member
+	if = {
+		limit = { exists = scope:recipient }
+		scope:recipient = { save_scope_as = ssc_he_target }
+	}
+	if = {
+		limit = {
+			exists = scope:ssc_he_target
+			ssc_can_pay_he_cost = yes
+		}
+		ssc_he_pay_cost_effect = yes
+		save_scope_as = ssc_faction_liege
+		# Save faction first, peel members, then target — avoid dissolve race
+		if = {
+			limit = {
+				scope:ssc_he_target = { exists = faction }
+			}
+			scope:ssc_he_target = {
+				faction = { save_scope_as = ssc_silenced_faction }
+			}
+		}
+		if = {
+			limit = { exists = scope:ssc_silenced_faction }
+			scope:ssc_silenced_faction = {
+				every_faction_member = {
+					limit = { is_alive = yes }
+					leave_faction = yes
+					add_character_modifier = {
+						modifier = ssc_he_silenced_modifier
+						years = 2
+					}
+				}
+			}
+		}
+		else = {
+			scope:ssc_he_target = {
+				if = {
+					limit = { exists = faction }
+					leave_faction = yes
+				}
+				add_character_modifier = {
+					modifier = ssc_he_silenced_modifier
+					years = 5
+				}
+			}
+		}
+		send_interface_toast = {
+			type = event_toast_effect_good
+			title = ssc_he_silence_faction_toast_title
+			left_icon = scope:ssc_he_target
+			custom_tooltip = ssc_he_silence_faction_toast_tt
+		}
+	}
+}
+
+### M4b Auto-hooks expansion try paths
+# root/this = liege; scope:ssc_hook_target candidate already OR set from caller
+ssc_try_auto_hook_character_silent_effect = {
+	if = {
+		limit = {
+			ssc_can_auto_strong_hook_liege = yes
+			exists = scope:ssc_hook_target
+		}
+		save_scope_value_as = { name = ssc_hook_notify value = no }
+		save_scope_as = ssc_hook_owner
+		scope:ssc_hook_target = {
+			if = {
+				limit = { ssc_can_receive_auto_strong_hook = yes }
+				scope:ssc_hook_owner = {
+					ssc_apply_strong_favor_hook_effect = yes
+				}
+			}
+		}
+	}
+}
+
+# on_join_court: root = joining character. Hook if their host/liege wants courtiers hooked.
+ssc_try_auto_hook_new_courtier_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+			exists = liege
+			liege = { ssc_can_auto_hook_courtiers_liege = yes }
+			is_courtier_of = liege
+		}
+		save_scope_as = ssc_hook_target
+		liege = {
+			ssc_try_auto_hook_character_silent_effect = yes
+		}
+	}
+	else_if = {
+		limit = {
+			is_alive = yes
+			exists = host
+			host = { ssc_can_auto_hook_courtiers_liege = yes }
+			is_courtier_of = host
+		}
+		save_scope_as = ssc_hook_target
+		host = {
+			ssc_try_auto_hook_character_silent_effect = yes
+		}
+	}
+}
+
+# on_title_gain: root = gainer; scope:title = title. Newly landed barons under player.
+ssc_try_auto_hook_new_baron_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+			exists = scope:title
+			scope:title = { tier = tier_barony }
+			exists = liege
+			liege = { ssc_can_auto_hook_barons_liege = yes }
+			is_vassal_of = liege
+		}
+		save_scope_as = ssc_hook_target
+		liege = {
+			ssc_try_auto_hook_character_silent_effect = yes
+		}
+	}
+}
+
+# on_imprison: root = prisoner; scope:imprisoner = jailor (vanilla)
+ssc_try_auto_hook_new_prisoner_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+			exists = scope:imprisoner
+			scope:imprisoner = { ssc_can_auto_hook_prisoners_liege = yes }
+		}
+		save_scope_as = ssc_hook_target
+		scope:imprisoner = {
+			ssc_try_auto_hook_character_silent_effect = yes
+		}
+	}
+}
+
+ssc_hook_all_courtiers_effect = {
+	save_scope_as = ssc_hook_owner
+	save_scope_value_as = { name = ssc_hook_notify value = no }
+	set_variable = { name = ssc_hook_all_count value = 0 }
+	every_courtier = {
+		limit = { ssc_can_receive_auto_strong_hook = yes }
+		save_scope_as = ssc_hook_target
+		scope:ssc_hook_owner = {
+			ssc_apply_strong_favor_hook_effect = yes
+			change_variable = { name = ssc_hook_all_count add = 1 }
+		}
+	}
+	if = {
+		limit = { var:ssc_hook_all_count > 0 }
+		send_interface_toast = {
+			type = event_toast_effect_good
+			title = ssc_hook_all_courtiers_toast_title
+			left_icon = root
+			custom_tooltip = ssc_hook_all_courtiers_toast_tt
+		}
+	}
+}
+
+ssc_hook_all_prisoners_effect = {
+	save_scope_as = ssc_hook_owner
+	save_scope_value_as = { name = ssc_hook_notify value = no }
+	set_variable = { name = ssc_hook_all_count value = 0 }
+	every_prisoner = {
+		limit = { ssc_can_receive_auto_strong_hook = yes }
+		save_scope_as = ssc_hook_target
+		scope:ssc_hook_owner = {
+			ssc_apply_strong_favor_hook_effect = yes
+			change_variable = { name = ssc_hook_all_count add = 1 }
+		}
+	}
+	if = {
+		limit = { var:ssc_hook_all_count > 0 }
+		send_interface_toast = {
+			type = event_toast_effect_good
+			title = ssc_hook_all_prisoners_toast_title
+			left_icon = root
+			custom_tooltip = ssc_hook_all_prisoners_toast_tt
 		}
 	}
 }

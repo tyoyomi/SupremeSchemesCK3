@@ -56,3 +56,61 @@ ssc_on_vassal_gained = {
 		ssc_try_auto_hook_new_vassal_effect = yes
 	}
 }
+
+# M4b — Courtiers (root = joining character)
+on_join_court = {
+	on_actions = { ssc_on_join_court }
+}
+
+ssc_on_join_court = {
+	trigger = {
+		is_alive = yes
+		OR = {
+			AND = {
+				exists = liege
+				liege = { ssc_can_auto_hook_courtiers_liege = yes }
+			}
+			AND = {
+				exists = host
+				host = { ssc_can_auto_hook_courtiers_liege = yes }
+			}
+		}
+	}
+	effect = {
+		ssc_try_auto_hook_new_courtier_effect = yes
+	}
+}
+
+# M4b — Newly landed barons (root = title gainer; scope:title)
+on_title_gain = {
+	on_actions = { ssc_on_title_gain_baron_hook }
+}
+
+ssc_on_title_gain_baron_hook = {
+	trigger = {
+		is_alive = yes
+		exists = scope:title
+		scope:title = { tier = tier_barony }
+		exists = liege
+		liege = { ssc_can_auto_hook_barons_liege = yes }
+	}
+	effect = {
+		ssc_try_auto_hook_new_baron_effect = yes
+	}
+}
+
+# M4b — Prisoners (root = prisoner; scope:imprisoner)
+on_imprison = {
+	on_actions = { ssc_on_imprison }
+}
+
+ssc_on_imprison = {
+	trigger = {
+		is_alive = yes
+		exists = scope:imprisoner
+		scope:imprisoner = { ssc_can_auto_hook_prisoners_liege = yes }
+	}
+	effect = {
+		ssc_try_auto_hook_new_prisoner_effect = yes
+	}
+}

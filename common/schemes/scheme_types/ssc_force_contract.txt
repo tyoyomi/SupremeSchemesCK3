@@ -1,0 +1,144 @@
+ssc_force_contract = {
+	skill = intrigue
+	desc = ssc_force_contract_desc
+	success_desc = ssc_force_contract_success_desc
+	discovery_desc = ssc_force_contract_discovery_desc
+	icon = icon_scheme_seduce
+	illustration = "gfx/interface/illustrations/event_scenes/corridor.dds"
+	category = personal
+	target_type = character
+	is_secret = yes
+	maximum_breaches = 5
+	cooldown = { days = 30 }
+	uses_resistance = no
+
+	speed_per_skill_point = ssc_spsp_owner_value
+	speed_per_target_skill_point = ssc_spsp_target_value
+	base_progress_goal = ssc_phase_length_value
+	maximum_secrecy = 100
+	base_maximum_success = ssc_base_max_success_value
+	phases_per_agent_charge = 1
+	success_chance_growth_per_skill_point = ssc_scgpsp_value
+
+	allow = {
+		custom_tooltip = {
+			text = ssc_tt_need_schemer_verb_pack_2
+			ssc_owner_can_run_verb_pack_2_scheme = yes
+		}
+		scope:target = {
+			is_adult = yes
+			is_imprisoned = no
+			NOT = { this = scope:owner }
+			custom_tooltip = {
+				text = ssc_tt_contract_target_marriage_possible
+				OR = {
+					AND = {
+						is_married = no
+						can_marry_character = scope:owner
+						scope:owner = {
+							is_married = no
+							can_marry_character = prev
+						}
+					}
+					ssc_force_contract_has_eligible_match = yes
+				}
+			}
+		}
+	}
+
+	valid = {
+		is_incapable = no
+		ssc_module_verb_pack_2_on = yes
+		has_trait = ssc_supreme_schemer
+		NOT = { has_character_flag = ssc_force_contract_cd }
+		scope:target = {
+			is_alive = yes
+			is_imprisoned = no
+			OR = {
+				exists = location
+				in_diplomatic_range = scope:owner
+			}
+		}
+	}
+
+	agent_leave_threshold = -25
+	agent_join_chance = {
+		base = 0
+		ai_agent_join_chance_basic_suite_modifier = yes
+	}
+	valid_agent = { is_valid_agent_standard_trigger = yes }
+	agent_groups_owner_perspective = { courtiers guests scripted_relations puppets }
+	agent_groups_target_character_perspective = { courtiers }
+
+	odds_prediction = {
+		add = base_odds_prediction_target_is_char_value
+		add = odds_skill_contribution_intrigue_value
+		add = 50
+		min = 0
+	}
+
+	base_success_chance = {
+		base = 0
+		scheme_type_skill_success_chance_modifier = { SKILL = INTRIGUE }
+		modifier = {
+			add = ssc_scheme_base_success_floor_value
+			desc = ssc_tt_need_schemer_verb_pack_2
+			always = yes
+		}
+		compare_modifier = {
+			desc = SCHEME_IS_A_SCHEMER
+			target = scope:owner
+			value = intrigue
+			multiplier = 2
+		}
+	}
+	base_secrecy = {
+		add = secrecy_base_value
+		add = 40
+	}
+
+	on_start = {
+		set_variable = {
+			name = apply_countermeasures
+			value = flag:calculating
+		}
+		add_scheme_starting_opportunities_intrigue_effect = yes
+		if = {
+			limit = {
+				scheme_owner = {
+					NOT = { has_variable = agents_added }
+				}
+			}
+			add_agent_slot = agent_diplomat
+			add_agent_slot = agent_infiltrator
+			add_agent_slot = agent_lookout
+		}
+		scheme_owner = { save_scope_as = owner }
+		scheme_target_character = { save_scope_as = target }
+		save_scope_as = scheme
+		if = {
+			limit = { scheme_owner = { is_ai = no } }
+			scheme_owner = { trigger_event = ssc_events.5101 }
+		}
+	}
+
+	on_phase_completed = {
+		ssc_force_contract_scheme_ending_effect = yes
+	}
+
+	on_monthly = {
+		hostile_scheme_monthly_discovery_chance_effect = yes
+	}
+
+	on_invalidated = {
+		scheme_target_character = { save_scope_as = target }
+		scheme_owner = { save_scope_as = owner }
+		scope:owner = {
+			send_interface_toast = {
+				title = ssc_force_contract_invalidated_title
+				left_icon = scope:target
+				custom_tooltip = ssc_force_contract_invalidated_desc
+			}
+		}
+	}
+}

@@ -67,3 +67,9 @@ ssc_scheme_base_success_floor_value = {
 ssc_spsp_owner_value = -2
 ssc_spsp_target_value = 0
 ssc_scgpsp_value = 1
+
+# M5 — Smear prestige hit (under SS demigod scale)
+ssc_smear_prestige_loss_value = -250
+
+# M6 — Hook Board Influence alternate (flat, readable)
+ssc_he_influence_cost_value = 150

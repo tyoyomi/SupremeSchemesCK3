@@ -95,6 +95,21 @@ ssc_rule_module_auto_hooks = {
 	}
 }
 
+ssc_rule_module_verb_pack_2 = {
+	categories = {
+		tweaks
+	}
+
+	default = ssc_rule_module_verb_pack_2_on
+
+	ssc_rule_module_verb_pack_2_on = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_module_verb_pack_2_off = {
+	}
+}
+
 ssc_rule_ai = {
 	categories = {
 		tweaks

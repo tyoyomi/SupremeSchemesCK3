@@ -360,3 +360,150 @@ ssc_owner_can_run_steal_title_scheme = {
 	NOT = { has_character_flag = ssc_steal_title_cd }
 	ssc_ai_may_use_ssc_schemes = yes
 }
+
+### M5 Verb Pack 2
+ssc_module_verb_pack_2_on = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_module_verb_pack_2
+			var:ssc_cfg_module_verb_pack_2 = 1
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_module_verb_pack_2 }
+			has_game_rule = ssc_rule_module_verb_pack_2_on
+		}
+	}
+	NOT = {
+		AND = {
+			exists = var:ssc_cfg_module_verb_pack_2
+			var:ssc_cfg_module_verb_pack_2 = 0
+		}
+	}
+}
+
+ssc_owner_can_run_verb_pack_2_scheme = {
+	ssc_is_supreme_schemer = yes
+	ssc_module_verb_pack_2_on = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_incapable = no
+	ssc_ai_may_use_ssc_schemes = yes
+}
+
+# this = reluctant marriage target; expects scope:owner = schemer
+ssc_force_contract_has_eligible_match = {
+	save_temporary_scope_as = ssc_contract_target
+	is_married = no
+	exists = scope:owner
+	OR = {
+		scope:owner = {
+			is_married = no
+			can_marry_character = scope:ssc_contract_target
+			scope:ssc_contract_target = { can_marry_character = prev }
+		}
+		scope:owner = {
+			any_courtier = {
+				is_alive = yes
+				is_adult = yes
+				is_married = no
+				can_marry_character = scope:ssc_contract_target
+				scope:ssc_contract_target = { can_marry_character = prev }
+			}
+		}
+		scope:owner = {
+			any_close_family_member = {
+				is_alive = yes
+				is_adult = yes
+				is_married = no
+				can_marry_character = scope:ssc_contract_target
+				scope:ssc_contract_target = { can_marry_character = prev }
+			}
+		}
+	}
+}
+
+### M4b Auto-hooks expansion sub-toggles (missing = Off / opt-in)
+ssc_auto_hooks_courtiers_on = {
+	ssc_module_auto_hooks_on = yes
+	exists = var:ssc_cfg_auto_hooks_courtiers
+	var:ssc_cfg_auto_hooks_courtiers = 1
+}
+
+ssc_auto_hooks_barons_on = {
+	ssc_module_auto_hooks_on = yes
+	exists = var:ssc_cfg_auto_hooks_barons
+	var:ssc_cfg_auto_hooks_barons = 1
+}
+
+ssc_auto_hooks_prisoners_on = {
+	ssc_module_auto_hooks_on = yes
+	exists = var:ssc_cfg_auto_hooks_prisoners
+	var:ssc_cfg_auto_hooks_prisoners = 1
+}
+
+ssc_can_auto_hook_courtiers_liege = {
+	ssc_can_auto_strong_hook_liege = yes
+	ssc_auto_hooks_courtiers_on = yes
+}
+
+ssc_can_auto_hook_barons_liege = {
+	ssc_can_auto_strong_hook_liege = yes
+	ssc_auto_hooks_barons_on = yes
+}
+
+ssc_can_auto_hook_prisoners_liege = {
+	ssc_can_auto_strong_hook_liege = yes
+	ssc_auto_hooks_prisoners_on = yes
+}
+
+### M6 Hook Board
+ssc_can_use_hook_board = {
+	is_alive = yes
+	is_ai = no
+	ssc_character_is_supreme_sovereign = yes
+}
+
+# Soft Influence alternate: DLC + influence government + enough Influence
+ssc_can_pay_influence_alternate = {
+	is_alive = yes
+	OR = {
+		has_ep3_dlc_trigger = yes
+		has_tgp_dlc_trigger = yes
+	}
+	government_has_influence = yes
+	influence >= ssc_he_influence_cost_value
+}
+
+# this = actor; target in scope:ssc_he_target
+ssc_has_strong_usable_hook_on_he_target = {
+	exists = scope:ssc_he_target
+	has_strong_usable_hook = scope:ssc_he_target
+}
+
+ssc_can_pay_he_cost = {
+	OR = {
+		ssc_has_strong_usable_hook_on_he_target = yes
+		ssc_can_pay_influence_alternate = yes
+	}
+}
+
+# SU soft peer: peer LIOS may set ssc_su_loaded_trigger. Until then dynasty-head
+# opinion grease still unblocks SU11 (threshold 25) when SU is in the playset.
+ssc_su_soft_available = {
+	OR = {
+		ssc_su_loaded_trigger = yes
+		is_dynast = yes
+	}
+}
+
+# Dynasty member below SU11 threshold (25) toward this (dynasty head)
+ssc_is_su_pact_objector = {
+	is_alive = yes
+	exists = scope:ssc_pact_head
+	NOT = { this = scope:ssc_pact_head }
+	dynasty = scope:ssc_pact_head.dynasty
+	opinion = {
+		target = scope:ssc_pact_head
+		value < 25
+	}
+}

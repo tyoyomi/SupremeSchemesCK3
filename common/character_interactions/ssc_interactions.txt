@@ -235,3 +235,190 @@ ssc_discover_secrets_interaction = {
 		base = 0
 	}
 }
+
+
+# M6 Hook Board targeted spends (player Supreme Sovereign)
+ssc_he_rewrite_contract_interaction = {
+	category = interaction_category_hostile
+	icon = intrigue
+	interface_priority = 52
+	common_interaction = yes
+
+	desc = ssc_he_rewrite_contract_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { ssc_can_use_hook_board = yes }
+		scope:recipient = {
+			is_alive = yes
+			is_vassal_of = scope:actor
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = ssc_tt_can_use_hook_board
+				ssc_can_use_hook_board = yes
+			}
+			custom_tooltip = {
+				text = ssc_tt_can_pay_he_cost
+				OR = {
+					has_strong_usable_hook = scope:recipient
+					ssc_can_pay_influence_alternate = yes
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		scope:recipient = { save_scope_as = ssc_he_target }
+		scope:actor = {
+			ssc_he_rewrite_contract_effect = yes
+		}
+	}
+
+	ai_targets = { ai_recipients = vassals chance = 0 }
+	ai_frequency = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+ssc_he_force_vote_interaction = {
+	category = interaction_category_hostile
+	icon = intrigue
+	interface_priority = 51
+	common_interaction = yes
+
+	desc = ssc_he_force_vote_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { ssc_can_use_hook_board = yes }
+		scope:recipient = {
+			is_alive = yes
+			NOT = { this = scope:actor }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = ssc_tt_can_use_hook_board
+				ssc_can_use_hook_board = yes
+			}
+			custom_tooltip = {
+				text = ssc_tt_can_pay_he_cost
+				OR = {
+					has_strong_usable_hook = scope:recipient
+					ssc_can_pay_influence_alternate = yes
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		scope:recipient = { save_scope_as = ssc_he_target }
+		scope:actor = {
+			ssc_he_force_vote_effect = yes
+		}
+	}
+
+	ai_targets = { ai_recipients = vassals chance = 0 }
+	ai_frequency = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+ssc_he_buy_pact_approval_interaction = {
+	category = interaction_category_friendly
+	icon = intrigue
+	interface_priority = 50
+	common_interaction = yes
+
+	desc = ssc_he_buy_pact_approval_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = {
+			ssc_can_use_hook_board = yes
+			ssc_su_soft_available = yes
+			is_dynast = yes
+		}
+		scope:recipient = {
+			is_alive = yes
+			NOT = { this = scope:actor }
+			dynasty = scope:actor.dynasty
+			opinion = {
+				target = scope:actor
+				value < 25
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = ssc_tt_can_pay_he_cost
+				OR = {
+					has_strong_usable_hook = scope:recipient
+					ssc_can_pay_influence_alternate = yes
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		scope:recipient = { save_scope_as = ssc_he_target }
+		scope:actor = {
+			ssc_he_buy_pact_approval_effect = yes
+		}
+	}
+
+	ai_targets = { ai_recipients = dynasty chance = 0 }
+	ai_frequency = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+ssc_he_silence_faction_interaction = {
+	category = interaction_category_hostile
+	icon = intrigue
+	interface_priority = 49
+	common_interaction = yes
+
+	desc = ssc_he_silence_faction_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { ssc_can_use_hook_board = yes }
+		scope:recipient = {
+			is_alive = yes
+			exists = faction
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = ssc_tt_can_pay_he_cost
+				OR = {
+					has_strong_usable_hook = scope:recipient
+					ssc_can_pay_influence_alternate = yes
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		scope:recipient = { save_scope_as = ssc_he_target }
+		scope:actor = {
+			ssc_he_silence_faction_effect = yes
+		}
+	}
+
+	ai_targets = { ai_recipients = vassals chance = 0 }
+	ai_frequency = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
