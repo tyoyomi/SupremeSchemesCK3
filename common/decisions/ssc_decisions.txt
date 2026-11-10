@@ -1,5 +1,5 @@
 # Supreme Schemes â€” Manage + Actions fold (suite major-decisions collapse).
-# Hook All Vassals lives on ssc_actions.1001.
+# Hook All Vassals/Courtiers/Prisoners/House Members live on ssc_actions.1001.
 
 ssc_embrace_supreme_schemes_decision = {
 	picture = {
