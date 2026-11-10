@@ -1,8 +1,11 @@
+# Supreme Schemes — Manage + Actions fold (suite major-decisions collapse).
+# Hook All Vassals lives on ssc_actions.1001.
+
 ssc_embrace_supreme_schemes_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
 	}
-	decision_group_type = major
+	decision_group_type = ssc_schemes
 	desc = ssc_embrace_supreme_schemes_decision_desc
 	selection_tooltip = ssc_embrace_supreme_schemes_decision_tooltip
 	confirm_text = ssc_embrace_supreme_schemes_decision_confirm
@@ -41,7 +44,7 @@ ssc_renounce_supreme_schemes_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
 	}
-	decision_group_type = major
+	decision_group_type = ssc_schemes
 	desc = ssc_renounce_supreme_schemes_decision_desc
 	selection_tooltip = ssc_renounce_supreme_schemes_decision_tooltip
 	confirm_text = ssc_renounce_supreme_schemes_decision_confirm
@@ -76,7 +79,7 @@ ssc_manage_supreme_schemes_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
 	}
-	decision_group_type = major
+	decision_group_type = ssc_schemes
 	desc = ssc_manage_supreme_schemes_decision_desc
 	selection_tooltip = ssc_manage_supreme_schemes_decision_tooltip
 	confirm_text = ssc_manage_supreme_schemes_decision_confirm
@@ -111,14 +114,14 @@ ssc_manage_supreme_schemes_decision = {
 	}
 }
 
-ssc_hook_all_vassals_decision = {
+ssc_schemes_actions_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
 	}
-	decision_group_type = major
-	desc = ssc_hook_all_vassals_decision_desc
-	selection_tooltip = ssc_hook_all_vassals_decision_tooltip
-	confirm_text = ssc_hook_all_vassals_decision_confirm
+	decision_group_type = ssc_schemes
+	desc = ssc_schemes_actions_decision_desc
+	selection_tooltip = ssc_schemes_actions_decision_tooltip
+	confirm_text = ssc_schemes_actions_decision_confirm
 
 	ai_check_interval = 0
 
@@ -130,36 +133,14 @@ ssc_hook_all_vassals_decision = {
 	}
 
 	is_valid = {
-		custom_tooltip = {
-			text = ssc_tt_actor_may_demand_strong_hook
-			ssc_can_demand_strong_hook_actor = yes
-		}
-		custom_tooltip = {
-			text = ssc_tt_has_hookable_vassals
-			any_vassal = {
-				save_temporary_scope_as = ssc_hook_candidate
-				is_alive = yes
-				NOT = { this = root }
-				root = {
-					can_add_hook = {
-						type = strong_favor_hook
-						target = scope:ssc_hook_candidate
-					}
-				}
-			}
-		}
+		always = yes
 	}
 
 	effect = {
-		custom_tooltip = ssc_hook_all_vassals_decision_effect_tt
-		ssc_hook_all_direct_vassals_effect = yes
+		custom_tooltip = ssc_schemes_actions_decision_effect_tt
+		trigger_event = ssc_actions.1001
 	}
 
-	ai_potential = {
-		always = no
-	}
-
-	ai_will_do = {
-		base = 0
-	}
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
 }

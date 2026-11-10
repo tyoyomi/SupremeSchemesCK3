@@ -35,6 +35,22 @@
  ssc_manage_supreme_schemes_decision_confirm:0 "Open Hub"
  ssc_manage_supreme_schemes_decision_effect_tt:0 "Opens the Supreme Schemes manage hub"
 
+ # Decision group
+ decision_group_type_ssc_schemes:0 "Supreme Schemes"
+
+ # Actions hub
+ ssc_schemes_actions_decision:0 "Supreme Schemes: Actions"
+ ssc_schemes_actions_decision_desc:0 "Open Scheme Actions: hook all direct vassals you can still hook.\n\nDone is always first. Gated actions stay hidden until ready."
+ ssc_schemes_actions_decision_tooltip:0 "Open Scheme Actions for bulk strong hooks"
+ ssc_schemes_actions_decision_confirm:0 "Open Actions"
+ ssc_schemes_actions_decision_effect_tt:0 "Opens the Supreme Schemes Actions hub"
+
+ ssc_actions.1001.t:0 "Scheme Actions"
+ ssc_actions.1001.desc:0 "Choose a Scheme action. Done closes the hub. Gated actions stay hidden until ready."
+ ssc_actions.1001.close:0 "Done"
+ ssc_actions.1001.hook_vassals:0 "Hook All Vassals"
+ ssc_actions.tt.close:0 "Close Scheme Actions without taking an action."
+
  # Interactions
  ssc_bestow_supreme_schemer_interaction:0 "Bestow Supreme Schemer"
  ssc_bestow_supreme_schemer_interaction_desc:0 "Elevate [recipient.GetShortUIName] as a Supreme Schemer. Available when the granting rule allows targets."
@@ -236,7 +252,7 @@
  ssc_settings.opt.auto_hooks_off:0 "Toggle Auto Strong Hooks (now Off)"
  ssc_settings.tt.auto_hooks:0 "When On, silently gain a strong favor hook on each new direct vassal"
 
- # Hook All Vassals decision
+ # Hook All Vassals (Actions hub option; loc kept for tooltips)
  ssc_hook_all_vassals_decision:0 "Hook All Vassals"
  ssc_hook_all_vassals_decision_desc:0 "As Supreme Sovereign, secure a strong favor hook on every current direct vassal you can still hook. One click. No cooldown. Skips anyone already hooked."
  ssc_hook_all_vassals_decision_tooltip:0 "Grant strong favor hooks on all hookable direct vassals"
