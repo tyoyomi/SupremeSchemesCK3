@@ -40,7 +40,7 @@
 
  # Actions hub
  ssc_schemes_actions_decision:0 "Supreme Schemes: Actions"
- ssc_schemes_actions_decision_desc:0 "Open Scheme Actions: hook all direct vassals you can still hook.\n\nDone is always first. Gated actions stay hidden until ready."
+ ssc_schemes_actions_decision_desc:0 "Open Scheme Actions: hook all vassals, courtiers, prisoners, and house members you can still hook.\n\nDone is always first. Gated actions stay hidden until ready."
  ssc_schemes_actions_decision_tooltip:0 "Open Scheme Actions for bulk strong hooks"
  ssc_schemes_actions_decision_confirm:0 "Open Actions"
  ssc_schemes_actions_decision_effect_tt:0 "Opens the Supreme Schemes Actions hub"
@@ -49,6 +49,7 @@
  ssc_actions.1001.desc:0 "Choose a Scheme action. Done closes the hub. Gated actions stay hidden until ready."
  ssc_actions.1001.close:0 "Done"
  ssc_actions.1001.hook_vassals:0 "Hook All Vassals"
+ ssc_actions.1001.hook_house_members:0 "Hook All House Members"
  ssc_actions.tt.close:0 "Close Scheme Actions without taking an action."
 
  # Interactions
@@ -417,6 +418,14 @@
  ssc_tt_has_hookable_prisoners:0 "You have at least one prisoner you can still hook"
  ssc_hook_all_prisoners_toast_title:0 "Prison Hooks Secured"
  ssc_hook_all_prisoners_toast_tt:0 "Strong favor hooks on prisoners ([ROOT.Var('ssc_hook_all_count').GetValue])"
+ ssc_hook_all_house_members_decision:0 "Hook All House Members"
+ ssc_hook_all_house_members_decision_desc:0 "As Supreme Sovereign, secure a strong favor hook on every living member of your house you can still hook. One click. No cooldown. Skips anyone already hooked."
+ ssc_hook_all_house_members_decision_tooltip:0 "Grant strong favor hooks on all hookable house members"
+ ssc_hook_all_house_members_decision_confirm:0 "Secure Hooks"
+ ssc_hook_all_house_members_decision_effect_tt:0 "Strong favor hooks on eligible house members"
+ ssc_tt_has_hookable_house_members:0 "You have at least one house member you can still hook"
+ ssc_hook_all_house_members_toast_title:0 "House Hooks Secured"
+ ssc_hook_all_house_members_toast_tt:0 "Strong favor hooks on house members ([ROOT.Var('ssc_hook_all_count').GetValue])"
  rule_ssc_rule_module_verb_pack_2:0 "Supreme Schemes: Machinations (Verb Pack 2)"
  setting_ssc_rule_module_verb_pack_2_on:0 "On"
  setting_ssc_rule_module_verb_pack_2_on_desc:0 "Abduct, Force Contract, and Smear schemes available. Blocks achievements."
