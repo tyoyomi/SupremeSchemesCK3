@@ -15,3 +15,45 @@ ssc_attempted_scheme_opinion = {
 	years = 10
 	decaying = yes
 }
+
+ssc_abducted_opinion = {
+	opinion = -80
+	years = 20
+	decaying = yes
+}
+
+ssc_forced_contract_opinion = {
+	opinion = -40
+	years = 15
+	decaying = yes
+}
+
+ssc_smeared_opinion = {
+	opinion = -50
+	years = 10
+	decaying = yes
+}
+
+ssc_smeared_by_me_opinion = {
+	opinion = -60
+	years = 15
+	decaying = yes
+}
+
+ssc_he_contract_rewritten_opinion = {
+	opinion = -30
+	years = 15
+	decaying = yes
+}
+
+ssc_he_whipped_vote_opinion = {
+	opinion = -15
+	years = 5
+	decaying = yes
+}
+
+ssc_he_pact_approval_opinion = {
+	opinion = 50
+	years = 10
+	decaying = no
+}

@@ -47,3 +47,32 @@ ssc_turbo_high_modifier = {
 	max_personal_schemes_add = @ssc_high_slots
 	max_hostile_schemes_add = @ssc_high_slots
 }
+
+# M5 — Smear / forced contract
+ssc_smeared_modifier = {
+	general_opinion = -40
+	monthly_prestige = -1
+	diplomacy = -4
+	intrigue = -2
+}
+
+ssc_forced_contract_modifier = {
+	general_opinion = -10
+}
+
+# M6 — Hook board temps (character-safe keys; contract GUI not rewritten)
+ssc_he_rewritten_contract_modifier = {
+	monthly_prestige = -1
+	diplomacy = -2
+	intrigue = -1
+}
+
+ssc_whipped_vote_modifier = {
+	monthly_prestige = -0.5
+	diplomacy = -1
+}
+
+ssc_he_silenced_modifier = {
+	monthly_prestige = -0.5
+	general_opinion = -5
+}

@@ -106,3 +106,319 @@ ssc_revoke_supreme_schemer_interaction = {
 		base = 0
 	}
 }
+
+# Player Supreme Sovereign only - force a strong favor hook on the target. No cooldown.
+ssc_demand_strong_hook_interaction = {
+	category = interaction_category_hostile
+	icon = intrigue
+	interface_priority = 60
+	common_interaction = yes
+
+	desc = ssc_demand_strong_hook_interaction_desc
+
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = {
+			ssc_can_demand_strong_hook_actor = yes
+		}
+		scope:recipient = {
+			is_alive = yes
+			NOT = { this = scope:actor }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = ssc_tt_actor_may_demand_strong_hook
+				ssc_can_demand_strong_hook_actor = yes
+			}
+			custom_tooltip = {
+				text = ssc_tt_can_add_strong_hook
+				can_add_hook = {
+					type = strong_favor_hook
+					target = scope:recipient
+				}
+			}
+		}
+		scope:recipient = {
+			custom_tooltip = {
+				text = ssc_tt_can_receive_strong_hook_demand
+				ssc_can_receive_strong_hook_demand = yes
+			}
+		}
+	}
+
+	on_accept = {
+		scope:actor = {
+			ssc_demand_strong_hook_effect = yes
+		}
+	}
+
+	ai_targets = {
+		ai_recipients = courtiers
+		chance = 0
+	}
+	ai_frequency = 0
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+ssc_discover_secrets_interaction = {
+	category = interaction_category_hostile
+	icon = intrigue
+	interface_priority = 58
+	common_interaction = yes
+
+	desc = ssc_discover_secrets_interaction_desc
+
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = {
+			is_alive = yes
+			has_trait = ssc_supreme_schemer
+		}
+		scope:recipient = {
+			is_alive = yes
+			NOT = { this = scope:actor }
+			any_secret = {
+				NOT = { is_known_by = scope:actor }
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = ssc_tt_need_schemer_secrets
+				has_trait = ssc_supreme_schemer
+				is_adult = yes
+				is_imprisoned = no
+			}
+		}
+		scope:recipient = {
+			custom_tooltip = {
+				text = ssc_tt_target_has_unknown_secrets
+				any_secret = {
+					NOT = { is_known_by = scope:actor }
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		scope:recipient = { save_scope_as = ssc_secret_target }
+		scope:actor = {
+			ssc_discover_all_secrets_of_target_effect = yes
+		}
+	}
+
+	ai_targets = {
+		ai_recipients = courtiers
+		chance = 0
+	}
+	ai_frequency = 0
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+
+# M6 Hook Board targeted spends (player Supreme Sovereign)
+ssc_he_rewrite_contract_interaction = {
+	category = interaction_category_hostile
+	icon = intrigue
+	interface_priority = 52
+	common_interaction = yes
+
+	desc = ssc_he_rewrite_contract_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { ssc_can_use_hook_board = yes }
+		scope:recipient = {
+			is_alive = yes
+			is_vassal_of = scope:actor
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = ssc_tt_can_use_hook_board
+				ssc_can_use_hook_board = yes
+			}
+			custom_tooltip = {
+				text = ssc_tt_can_pay_he_cost
+				OR = {
+					has_strong_usable_hook = scope:recipient
+					ssc_can_pay_influence_alternate = yes
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		scope:recipient = { save_scope_as = ssc_he_target }
+		scope:actor = {
+			ssc_he_rewrite_contract_effect = yes
+		}
+	}
+
+	ai_targets = { ai_recipients = vassals chance = 0 }
+	ai_frequency = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+ssc_he_force_vote_interaction = {
+	category = interaction_category_hostile
+	icon = intrigue
+	interface_priority = 51
+	common_interaction = yes
+
+	desc = ssc_he_force_vote_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { ssc_can_use_hook_board = yes }
+		scope:recipient = {
+			is_alive = yes
+			NOT = { this = scope:actor }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = ssc_tt_can_use_hook_board
+				ssc_can_use_hook_board = yes
+			}
+			custom_tooltip = {
+				text = ssc_tt_can_pay_he_cost
+				OR = {
+					has_strong_usable_hook = scope:recipient
+					ssc_can_pay_influence_alternate = yes
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		scope:recipient = { save_scope_as = ssc_he_target }
+		scope:actor = {
+			ssc_he_force_vote_effect = yes
+		}
+	}
+
+	ai_targets = { ai_recipients = vassals chance = 0 }
+	ai_frequency = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+ssc_he_buy_pact_approval_interaction = {
+	category = interaction_category_friendly
+	icon = intrigue
+	interface_priority = 50
+	common_interaction = yes
+
+	desc = ssc_he_buy_pact_approval_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = {
+			ssc_can_use_hook_board = yes
+			ssc_su_soft_available = yes
+			is_dynast = yes
+		}
+		scope:recipient = {
+			is_alive = yes
+			NOT = { this = scope:actor }
+			dynasty = scope:actor.dynasty
+			opinion = {
+				target = scope:actor
+				value < 25
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = ssc_tt_can_pay_he_cost
+				OR = {
+					has_strong_usable_hook = scope:recipient
+					ssc_can_pay_influence_alternate = yes
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		scope:recipient = { save_scope_as = ssc_he_target }
+		scope:actor = {
+			ssc_he_buy_pact_approval_effect = yes
+		}
+	}
+
+	ai_targets = { ai_recipients = dynasty chance = 0 }
+	ai_frequency = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+ssc_he_silence_faction_interaction = {
+	category = interaction_category_hostile
+	icon = intrigue
+	interface_priority = 49
+	common_interaction = yes
+
+	desc = ssc_he_silence_faction_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { ssc_can_use_hook_board = yes }
+		scope:recipient = {
+			is_alive = yes
+			exists = faction
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = ssc_tt_can_pay_he_cost
+				OR = {
+					has_strong_usable_hook = scope:recipient
+					ssc_can_pay_influence_alternate = yes
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		scope:recipient = { save_scope_as = ssc_he_target }
+		scope:actor = {
+			ssc_he_silence_faction_effect = yes
+		}
+	}
+
+	ai_targets = { ai_recipients = vassals chance = 0 }
+	ai_frequency = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}

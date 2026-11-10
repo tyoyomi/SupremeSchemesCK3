@@ -12,3 +12,105 @@ ssc_on_death = {
 		ssc_clear_schemer_modifiers_effect = yes
 	}
 }
+
+# Strong-hook spend CD bypass for player schemer / Sovereign
+on_hook_used = {
+	on_actions = { ssc_on_hook_used }
+}
+
+ssc_on_hook_used = {
+	trigger = {
+		ssc_player_bypasses_hook_cooldowns = yes
+	}
+	effect = {
+		ssc_refresh_hook_after_use_effect = yes
+	}
+}
+
+# Fabricate Hook scheme CD clear after success outcome (end_scheme applies CD first)
+fabricate_hook_method_success_outcome = {
+	on_actions = { ssc_after_fabricate_hook_success }
+}
+
+ssc_after_fabricate_hook_success = {
+	trigger = {
+		ssc_player_bypasses_hook_cooldowns = yes
+		exists = scope:target
+	}
+	effect = {
+		ssc_queue_fabricate_hook_cooldown_clear_effect = yes
+	}
+}
+
+# Auto Strong Hooks — silent grant on new direct vassals (root = new liege, scope:vassal)
+on_vassal_gained = {
+	on_actions = { ssc_on_vassal_gained }
+}
+
+ssc_on_vassal_gained = {
+	trigger = {
+		ssc_can_auto_strong_hook_liege = yes
+		exists = scope:vassal
+	}
+	effect = {
+		ssc_try_auto_hook_new_vassal_effect = yes
+	}
+}
+
+# M4b — Courtiers (root = joining character)
+on_join_court = {
+	on_actions = { ssc_on_join_court }
+}
+
+ssc_on_join_court = {
+	trigger = {
+		is_alive = yes
+		OR = {
+			AND = {
+				exists = liege
+				liege = { ssc_can_auto_hook_courtiers_liege = yes }
+			}
+			AND = {
+				exists = host
+				host = { ssc_can_auto_hook_courtiers_liege = yes }
+			}
+		}
+	}
+	effect = {
+		ssc_try_auto_hook_new_courtier_effect = yes
+	}
+}
+
+# M4b — Newly landed barons (root = title gainer; scope:title)
+on_title_gain = {
+	on_actions = { ssc_on_title_gain_baron_hook }
+}
+
+ssc_on_title_gain_baron_hook = {
+	trigger = {
+		is_alive = yes
+		exists = scope:title
+		scope:title = { tier = tier_barony }
+		exists = liege
+		liege = { ssc_can_auto_hook_barons_liege = yes }
+	}
+	effect = {
+		ssc_try_auto_hook_new_baron_effect = yes
+	}
+}
+
+# M4b — Prisoners (root = prisoner; scope:imprisoner)
+on_imprison = {
+	on_actions = { ssc_on_imprison }
+}
+
+ssc_on_imprison = {
+	trigger = {
+		is_alive = yes
+		exists = scope:imprisoner
+		scope:imprisoner = { ssc_can_auto_hook_prisoners_liege = yes }
+	}
+	effect = {
+		ssc_try_auto_hook_new_prisoner_effect = yes
+	}
+}

@@ -80,6 +80,36 @@ ssc_rule_module_title_intrigue = {
 	}
 }
 
+ssc_rule_module_auto_hooks = {
+	categories = {
+		tweaks
+	}
+
+	default = ssc_rule_module_auto_hooks_on
+
+	ssc_rule_module_auto_hooks_on = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_module_auto_hooks_off = {
+	}
+}
+
+ssc_rule_module_verb_pack_2 = {
+	categories = {
+		tweaks
+	}
+
+	default = ssc_rule_module_verb_pack_2_on
+
+	ssc_rule_module_verb_pack_2_on = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_module_verb_pack_2_off = {
+	}
+}
+
 ssc_rule_ai = {
 	categories = {
 		tweaks
@@ -107,6 +137,14 @@ ssc_rule_title_steal_cap = {
 	}
 
 	ssc_rule_title_steal_cap_duchy = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_title_steal_cap_kingdom = {
+		flag = blocks_achievements
+	}
+
+	ssc_rule_title_steal_cap_empire = {
 		flag = blocks_achievements
 	}
 }

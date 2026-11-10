@@ -4,6 +4,32 @@ ssc_is_supreme_schemer = {
 	has_trait = ssc_supreme_schemer
 }
 
+# Soft peer: Supreme Sovereign trait key. Fails closed if SS is absent (may log once).
+ssc_character_is_supreme_sovereign = {
+	has_trait = Supreme_Sovereign
+}
+
+ssc_can_demand_strong_hook_actor = {
+	is_alive = yes
+	is_ai = no
+	ssc_character_is_supreme_sovereign = yes
+}
+
+# Player Supreme Schemer and/or Supreme Sovereign: bypass hook spend + fabricate-hook CDs
+ssc_player_bypasses_hook_cooldowns = {
+	is_alive = yes
+	is_ai = no
+	OR = {
+		has_trait = ssc_supreme_schemer
+		ssc_character_is_supreme_sovereign = yes
+	}
+}
+
+ssc_can_receive_strong_hook_demand = {
+	is_alive = yes
+	NOT = { this = scope:actor }
+}
+
 ssc_granting_disabled = {
 	has_game_rule = ssc_rule_granting_disabled
 }
@@ -86,6 +112,46 @@ ssc_module_title_on = {
 	}
 }
 
+ssc_module_auto_hooks_on = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_module_auto_hooks
+			var:ssc_cfg_module_auto_hooks = 1
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_module_auto_hooks }
+			has_game_rule = ssc_rule_module_auto_hooks_on
+		}
+	}
+	NOT = {
+		AND = {
+			exists = var:ssc_cfg_module_auto_hooks
+			var:ssc_cfg_module_auto_hooks = 0
+		}
+	}
+}
+
+# this = prospective hook owner / new liege (auto path)
+ssc_can_auto_strong_hook_liege = {
+	is_alive = yes
+	is_ai = no
+	ssc_character_is_supreme_sovereign = yes
+	ssc_module_auto_hooks_on = yes
+}
+
+# this = vassal candidate; expects scope:ssc_hook_owner = prospective owner
+ssc_can_receive_auto_strong_hook = {
+	is_alive = yes
+	NOT = { this = scope:ssc_hook_owner }
+	save_temporary_scope_as = ssc_hook_candidate
+	scope:ssc_hook_owner = {
+		can_add_hook = {
+			type = strong_favor_hook
+			target = scope:ssc_hook_candidate
+		}
+	}
+}
+
 ssc_intensity_is_low = {
 	exists = var:ssc_cfg_intensity
 	var:ssc_cfg_intensity = 1
@@ -103,15 +169,51 @@ ssc_intensity_is_high = {
 	}
 }
 
+# Cap values: 1=county, 2=duchy, 3=kingdom, 4=empire
 ssc_title_cap_allows_duchy = {
 	OR = {
 		AND = {
 			exists = var:ssc_cfg_title_cap
-			var:ssc_cfg_title_cap = 2
+			var:ssc_cfg_title_cap >= 2
 		}
 		AND = {
 			NOT = { exists = var:ssc_cfg_title_cap }
-			has_game_rule = ssc_rule_title_steal_cap_duchy
+			OR = {
+				has_game_rule = ssc_rule_title_steal_cap_duchy
+				has_game_rule = ssc_rule_title_steal_cap_kingdom
+				has_game_rule = ssc_rule_title_steal_cap_empire
+			}
+		}
+	}
+	ssc_intensity_is_high = yes
+}
+
+ssc_title_cap_allows_kingdom = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_title_cap
+			var:ssc_cfg_title_cap >= 3
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_title_cap }
+			OR = {
+				has_game_rule = ssc_rule_title_steal_cap_kingdom
+				has_game_rule = ssc_rule_title_steal_cap_empire
+			}
+		}
+	}
+	ssc_intensity_is_high = yes
+}
+
+ssc_title_cap_allows_empire = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_title_cap
+			var:ssc_cfg_title_cap >= 4
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_title_cap }
+			has_game_rule = ssc_rule_title_steal_cap_empire
 		}
 	}
 	ssc_intensity_is_high = yes
@@ -122,23 +224,43 @@ ssc_title_is_stealable = {
 	exists = holder
 	is_landless_type_title = no
 	is_noble_family_title = no
-	NOR = {
-		tier = tier_barony
-		tier >= tier_kingdom
-	}
+	NOT = { tier = tier_barony }
 	holder = {
 		is_alive = yes
 		is_landed = yes
 		NOT = { this = scope:owner }
 		NOT = { government_has_flag = government_is_holy_order }
 	}
-	# Mid: county only. High: county, or duchy if cap allows.
+	# Mid: county only. High: up to configured cap (county→empire).
 	trigger_if = {
 		limit = {
 			exists = scope:owner
 			scope:owner = { ssc_intensity_is_mid = yes }
 		}
 		tier = tier_county
+	}
+	trigger_else_if = {
+		limit = {
+			exists = scope:owner
+			scope:owner = { ssc_title_cap_allows_empire = yes }
+		}
+		OR = {
+			tier = tier_county
+			tier = tier_duchy
+			tier = tier_kingdom
+			tier = tier_empire
+		}
+	}
+	trigger_else_if = {
+		limit = {
+			exists = scope:owner
+			scope:owner = { ssc_title_cap_allows_kingdom = yes }
+		}
+		OR = {
+			tier = tier_county
+			tier = tier_duchy
+			tier = tier_kingdom
+		}
 	}
 	trigger_else_if = {
 		limit = {
@@ -162,6 +284,8 @@ ssc_title_steal_leaves_holder_landed = {
 	}
 	OR = {
 		tier = tier_duchy
+		tier = tier_kingdom
+		tier = tier_empire
 		AND = {
 			tier = tier_county
 			scope:ssc_title_holder = {
@@ -169,6 +293,20 @@ ssc_title_steal_leaves_holder_landed = {
 					count >= 2
 					tier = tier_county
 				}
+			}
+		}
+	}
+	# Kingdom/empire steals require the holder keep at least one county
+	trigger_if = {
+		limit = {
+			OR = {
+				tier = tier_kingdom
+				tier = tier_empire
+			}
+		}
+		scope:ssc_title_holder = {
+			any_held_title = {
+				tier = tier_county
 			}
 		}
 	}
@@ -221,4 +359,151 @@ ssc_owner_can_run_steal_title_scheme = {
 	NOT = { ssc_intensity_is_low = yes }
 	NOT = { has_character_flag = ssc_steal_title_cd }
 	ssc_ai_may_use_ssc_schemes = yes
+}
+
+### M5 Verb Pack 2
+ssc_module_verb_pack_2_on = {
+	OR = {
+		AND = {
+			exists = var:ssc_cfg_module_verb_pack_2
+			var:ssc_cfg_module_verb_pack_2 = 1
+		}
+		AND = {
+			NOT = { exists = var:ssc_cfg_module_verb_pack_2 }
+			has_game_rule = ssc_rule_module_verb_pack_2_on
+		}
+	}
+	NOT = {
+		AND = {
+			exists = var:ssc_cfg_module_verb_pack_2
+			var:ssc_cfg_module_verb_pack_2 = 0
+		}
+	}
+}
+
+ssc_owner_can_run_verb_pack_2_scheme = {
+	ssc_is_supreme_schemer = yes
+	ssc_module_verb_pack_2_on = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_incapable = no
+	ssc_ai_may_use_ssc_schemes = yes
+}
+
+# this = reluctant marriage target; expects scope:owner = schemer
+ssc_force_contract_has_eligible_match = {
+	save_temporary_scope_as = ssc_contract_target
+	is_married = no
+	exists = scope:owner
+	OR = {
+		scope:owner = {
+			is_married = no
+			can_marry_character = scope:ssc_contract_target
+			scope:ssc_contract_target = { can_marry_character = prev }
+		}
+		scope:owner = {
+			any_courtier = {
+				is_alive = yes
+				is_adult = yes
+				is_married = no
+				can_marry_character = scope:ssc_contract_target
+				scope:ssc_contract_target = { can_marry_character = prev }
+			}
+		}
+		scope:owner = {
+			any_close_family_member = {
+				is_alive = yes
+				is_adult = yes
+				is_married = no
+				can_marry_character = scope:ssc_contract_target
+				scope:ssc_contract_target = { can_marry_character = prev }
+			}
+		}
+	}
+}
+
+### M4b Auto-hooks expansion sub-toggles (missing = Off / opt-in)
+ssc_auto_hooks_courtiers_on = {
+	ssc_module_auto_hooks_on = yes
+	exists = var:ssc_cfg_auto_hooks_courtiers
+	var:ssc_cfg_auto_hooks_courtiers = 1
+}
+
+ssc_auto_hooks_barons_on = {
+	ssc_module_auto_hooks_on = yes
+	exists = var:ssc_cfg_auto_hooks_barons
+	var:ssc_cfg_auto_hooks_barons = 1
+}
+
+ssc_auto_hooks_prisoners_on = {
+	ssc_module_auto_hooks_on = yes
+	exists = var:ssc_cfg_auto_hooks_prisoners
+	var:ssc_cfg_auto_hooks_prisoners = 1
+}
+
+ssc_can_auto_hook_courtiers_liege = {
+	ssc_can_auto_strong_hook_liege = yes
+	ssc_auto_hooks_courtiers_on = yes
+}
+
+ssc_can_auto_hook_barons_liege = {
+	ssc_can_auto_strong_hook_liege = yes
+	ssc_auto_hooks_barons_on = yes
+}
+
+ssc_can_auto_hook_prisoners_liege = {
+	ssc_can_auto_strong_hook_liege = yes
+	ssc_auto_hooks_prisoners_on = yes
+}
+
+### M6 Hook Board
+ssc_can_use_hook_board = {
+	is_alive = yes
+	is_ai = no
+	ssc_character_is_supreme_sovereign = yes
+}
+
+# Soft Influence alternate: DLC + influence government + enough Influence
+ssc_can_pay_influence_alternate = {
+	is_alive = yes
+	OR = {
+		has_ep3_dlc_trigger = yes
+		has_tgp_dlc_trigger = yes
+	}
+	government_has_influence = yes
+	influence >= ssc_he_influence_cost_value
+}
+
+# this = actor; target in scope:ssc_he_target
+ssc_has_strong_usable_hook_on_he_target = {
+	exists = scope:ssc_he_target
+	has_strong_usable_hook = scope:ssc_he_target
+}
+
+ssc_can_pay_he_cost = {
+	OR = {
+		ssc_has_strong_usable_hook_on_he_target = yes
+		ssc_can_pay_influence_alternate = yes
+	}
+}
+
+# SU soft peer: peer LIOS may set ssc_su_loaded_trigger. Until then dynasty-head
+# opinion grease still unblocks SU11 (threshold 25) when SU is in the playset.
+ssc_su_soft_available = {
+	OR = {
+		ssc_su_loaded_trigger = yes
+		is_dynast = yes
+	}
+}
+
+# Dynasty member below SU11 threshold (25) toward this (dynasty head)
+ssc_is_su_pact_objector = {
+	is_alive = yes
+	exists = scope:ssc_pact_head
+	NOT = { this = scope:ssc_pact_head }
+	dynasty = scope:ssc_pact_head.dynasty
+	opinion = {
+		target = scope:ssc_pact_head
+		value < 25
+	}
 }
