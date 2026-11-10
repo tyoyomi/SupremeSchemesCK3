@@ -1,7 +1,7 @@
-﻿l_english:
+﻿ï»¿l_english:
  # Trait
  trait_ssc_supreme_schemer:0 "Supreme Schemer"
- trait_ssc_supreme_schemer_desc:0 "Plots resolve in days, secrecy is absurd, and intrigue alone can steal artifacts and titles. Personal power stays below a Supreme Sovereign — the cheat is tempo and certainty."
+ trait_ssc_supreme_schemer_desc:0 "Plots resolve in days, secrecy is absurd, and intrigue alone can steal artifacts and titles. Personal power stays below a Supreme Sovereign â€” the cheat is tempo and certainty."
 
  # Modifiers
  ssc_turbo_low_modifier:0 "Supreme Tempo (Low)"
@@ -30,10 +30,26 @@
  ssc_renounce_supreme_schemes_decision_effect_tt:0 "You lose Supreme Schemer"
 
  ssc_manage_supreme_schemes_decision:0 "Manage Supreme Schemes"
- ssc_manage_supreme_schemes_decision_desc:0 "Review intensity, modules, auto-hook scopes, Machinations, Hook Board, and title-steal cap. Cycle options show the current value before flipping. Stacks with Supreme Sovereign Schemes hub if both are loaded — intentionally OP."
+ ssc_manage_supreme_schemes_decision_desc:0 "Review intensity, module toggles, and title-steal cap. Cycle options show the current value before flipping. Stacks with Supreme Sovereign Schemes hub if both are loaded â€” intentionally OP."
  ssc_manage_supreme_schemes_decision_tooltip:0 "Open the Supreme Schemes settings hub"
  ssc_manage_supreme_schemes_decision_confirm:0 "Open Hub"
  ssc_manage_supreme_schemes_decision_effect_tt:0 "Opens the Supreme Schemes manage hub"
+
+ # Decision group
+ decision_group_type_ssc_schemes:0 "Supreme Schemes"
+
+ # Actions hub
+ ssc_schemes_actions_decision:0 "Supreme Schemes: Actions"
+ ssc_schemes_actions_decision_desc:0 "Open Scheme Actions: hook all direct vassals you can still hook.\n\nDone is always first. Gated actions stay hidden until ready."
+ ssc_schemes_actions_decision_tooltip:0 "Open Scheme Actions for bulk strong hooks"
+ ssc_schemes_actions_decision_confirm:0 "Open Actions"
+ ssc_schemes_actions_decision_effect_tt:0 "Opens the Supreme Schemes Actions hub"
+
+ ssc_actions.1001.t:0 "Scheme Actions"
+ ssc_actions.1001.desc:0 "Choose a Scheme action. Done closes the hub. Gated actions stay hidden until ready."
+ ssc_actions.1001.close:0 "Done"
+ ssc_actions.1001.hook_vassals:0 "Hook All Vassals"
+ ssc_actions.tt.close:0 "Close Scheme Actions without taking an action."
 
  # Interactions
  ssc_bestow_supreme_schemer_interaction:0 "Bestow Supreme Schemer"
@@ -67,7 +83,7 @@
  # Schemes
  ssc_steal_artifact:0 "Steal Artifact"
  ssc_steal_artifact_action:0 "Steal Artifact"
- ssc_steal_artifact_desc:0 "Pilfer an artifact from the target's holdings through intrigue. No prior claim required. Reliquary heirlooms may later reclaim — soft tension, not a bug."
+ ssc_steal_artifact_desc:0 "Pilfer an artifact from the target's holdings through intrigue. No prior claim required. Reliquary heirlooms may later reclaim â€” soft tension, not a bug."
  ssc_steal_artifact_success_desc:0 "You will take one of their artifacts."
  ssc_steal_artifact_discovery_desc:0 "They may learn you tried to steal from them."
  ssc_steal_artifact_invalidated_title:0 "Steal Artifact scheme ended"
@@ -83,7 +99,7 @@
 
  ssc_steal_title:0 "Steal Title"
  ssc_steal_title_action:0 "Steal Title"
- ssc_steal_title_desc:0 "Usurp a county (Mid) or up to your title-steal cap at High (duchy/kingdom/empire) through intrigue — not war. Hidden at Low intensity. Kingdom/empire only when the holder keeps a county. Refuses last-county and unsafe special titles."
+ ssc_steal_title_desc:0 "Usurp a county (Mid) or up to your title-steal cap at High (duchy/kingdom/empire) through intrigue â€” not war. Hidden at Low intensity. Kingdom/empire only when the holder keeps a county. Refuses last-county and unsafe special titles."
  ssc_steal_title_success_desc:0 "You will take the title."
  ssc_steal_title_discovery_desc:0 "The holder may learn of the plot."
  ssc_steal_title_invalidated_title:0 "Steal Title scheme ended"
@@ -99,7 +115,7 @@
  ssc_events.1002.a:0 "So be it."
 
  ssc_events.2001.t:0 "Artifact Secured"
- ssc_events.2001.desc:0 "The piece is yours. If it was a Reliquary heirloom, never-lost magic may try to reclaim it later — intended soft conflict."
+ ssc_events.2001.desc:0 "The piece is yours. If it was a Reliquary heirloom, never-lost magic may try to reclaim it later â€” intended soft conflict."
  ssc_events.2001.a:0 "Mine."
 
  ssc_events.2002.t:0 "Heist Foiled"
@@ -124,7 +140,7 @@
  ssc_events.3002.a:0 "Frustrating."
 
  ssc_events.3101.t:0 "Title Stolen"
- ssc_events.3101.desc:0 "Through intrigue alone, the title changes hands. Expect fury — and let succession settle itself."
+ ssc_events.3101.desc:0 "Through intrigue alone, the title changes hands. Expect fury â€” and let succession settle itself."
  ssc_events.3101.a:0 "It is mine."
 
  ssc_events.3102.t:0 "Usurpation Failed"
@@ -135,7 +151,7 @@
  ssc_settings.1001.t:0 "Supreme Schemes"
  ssc_settings.1001.desc_intro:0 "Tune intrigue tempo and theft modules. High intensity aims for ~3-day Supreme Schemes phases and functionally guaranteed success. Vanilla schemes get success/secrecy/slot help; day-scale finish is strongest on SSC scheme types."
  ssc_settings.1001.desc_blank:0 "\n"
- ssc_settings.1001.desc_footer:0 "Close when finished. Modules Off hide matching schemes. Auto Hook Scopes and Hook Board are sub-pages. Title cap only matters at High for Steal Title."
+ ssc_settings.1001.desc_footer:0 "Close when finished. Modules Off hide the matching schemes. Title cap only matters at High for Steal Title."
  ssc_settings.1001.close:0 "Close"
 
  ssc_settings.tier.intensity_1:0 "Intensity: Low (~14-day phases, soft success)"
@@ -163,11 +179,11 @@
  ssc_settings.opt.cap_county:0 "Cycle title cap (now County)"
  ssc_settings.opt.cap_duchy:0 "Cycle title cap (now Duchy)"
 
- ssc_settings.tt.intensity:0 "Cycles Low → Mid → High → Low and refreshes turbo modifiers"
+ ssc_settings.tt.intensity:0 "Cycles Low â†’ Mid â†’ High â†’ Low and refreshes turbo modifiers"
  ssc_settings.tt.turbo:0 "Turns character success/secrecy/slot package on or off"
  ssc_settings.tt.artifact:0 "Shows or hides the Steal Artifact scheme"
  ssc_settings.tt.title:0 "Shows or hides Fabricate Claim and Steal Title"
- ssc_settings.tt.title_cap:0 "County → Duchy → Kingdom → Empire ceiling for Steal Title at High intensity. Kingdom/empire require the holder keep a county."
+ ssc_settings.tt.title_cap:0 "County â†’ Duchy â†’ Kingdom â†’ Empire ceiling for Steal Title at High intensity. Kingdom/empire require the holder keep a county."
  ssc_settings.tt.close:0 "Close the hub"
 
  # Game rules
@@ -225,7 +241,7 @@
  ssc_settings.opt.cap_kingdom:0 "Cycle title cap (now Kingdom)"
  ssc_settings.opt.cap_empire:0 "Cycle title cap (now Empire)"
  ssc_discover_secrets_interaction:0 "Discover Secrets"
- ssc_discover_secrets_interaction_desc:0 "As a Supreme Schemer, instantly learn every secret [recipient.GetShortUIName] still keeps from you. Wallhack intrigue — no scheme required."
+ ssc_discover_secrets_interaction_desc:0 "As a Supreme Schemer, instantly learn every secret [recipient.GetShortUIName] still keeps from you. Wallhack intrigue â€” no scheme required."
  ssc_discover_secrets_interaction_extra_icon:0 "$"
  ssc_tt_need_schemer_secrets:0 "You are a free adult Supreme Schemer"
  ssc_tt_target_has_unknown_secrets:0 "They have at least one secret you do not know"
@@ -236,7 +252,7 @@
  ssc_settings.opt.auto_hooks_off:0 "Toggle Auto Strong Hooks (now Off)"
  ssc_settings.tt.auto_hooks:0 "When On, silently gain a strong favor hook on each new direct vassal"
 
- # Hook All Vassals decision
+ # Hook All Vassals (Actions hub option; loc kept for tooltips)
  ssc_hook_all_vassals_decision:0 "Hook All Vassals"
  ssc_hook_all_vassals_decision_desc:0 "As Supreme Sovereign, secure a strong favor hook on every current direct vassal you can still hook. One click. No cooldown. Skips anyone already hooked."
  ssc_hook_all_vassals_decision_tooltip:0 "Grant strong favor hooks on all hookable direct vassals"
@@ -253,25 +269,23 @@
  setting_ssc_rule_module_auto_hooks_off:0 "Off"
  setting_ssc_rule_module_auto_hooks_off_desc:0 "No automatic strong hooks on new vassals by default (hub can still enable)."
 
- # M5 Verb Pack 2 schemes
+ # --- next-iter keys preserved from main ---
  ssc_abduct:0 "Abduct"
  ssc_abduct_action:0 "Abduct"
- ssc_abduct_desc:0 "Vanish the target into your dungeon through intrigue in days — not dread-authority arrest. Soft peer to Tyrant Arbitrary Arrest."
+ ssc_abduct_desc:0 "Vanish the target into your dungeon through intrigue in days â€” not dread-authority arrest. Soft peer to Tyrant Arbitrary Arrest."
  ssc_abduct_success_desc:0 "You will imprison them."
  ssc_abduct_discovery_desc:0 "They may learn you tried to snatch them."
  ssc_abduct_invalidated_title:0 "Abduct scheme ended"
  ssc_abduct_invalidated_desc:0 "The scheme is no longer valid."
-
  ssc_force_contract:0 "Force Contract"
  ssc_force_contract_action:0 "Force Contract"
- ssc_force_contract_desc:0 "Compel a marriage contract through intrigue. Soft peer to Diplomat Marriage Pact — this is force, not charm."
+ ssc_force_contract_desc:0 "Compel a marriage contract through intrigue. Soft peer to Diplomat Marriage Pact â€” this is force, not charm."
  ssc_force_contract_success_desc:0 "You will force a marriage."
  ssc_force_contract_discovery_desc:0 "They may learn you plotted a forced marriage."
  ssc_force_contract_invalidated_title:0 "Force Contract scheme ended"
  ssc_force_contract_invalidated_desc:0 "The scheme is no longer valid."
  ssc_force_contract_no_match_title:0 "No Legal Match"
- ssc_force_contract_no_match_tt:0 "No faith/age-legal spouse was available — scheme cooled down anyway."
-
+ ssc_force_contract_no_match_tt:0 "No faith/age-legal spouse was available â€” scheme cooled down anyway."
  ssc_smear:0 "Smear"
  ssc_smear_action:0 "Smear"
  ssc_smear_desc:0 "Ruin their reputation in days. Prestige loss, a lasting smear, and cold looks from your court and vassals. Not a hook grant."
@@ -279,11 +293,8 @@
  ssc_smear_discovery_desc:0 "They may learn who whispered."
  ssc_smear_invalidated_title:0 "Smear scheme ended"
  ssc_smear_invalidated_desc:0 "The scheme is no longer valid."
-
  ssc_tt_need_schemer_verb_pack_2:0 "You are a Supreme Schemer with Machinations (Verb Pack 2) enabled"
  ssc_tt_contract_target_marriage_possible:0 "A legal marriage match exists for them"
-
- # M5 modifiers / opinions
  ssc_smeared_modifier:0 "Smeared"
  ssc_smeared_modifier_desc:0 "Whispers have ruined this character's standing."
  ssc_forced_contract_modifier:0 "Forced Contract"
@@ -292,8 +303,6 @@
  ssc_forced_contract_opinion:0 "Forced my marriage"
  ssc_smeared_opinion:0 "Believes the smear"
  ssc_smeared_by_me_opinion:0 "Smeared me"
-
- # M5 events
  ssc_events.5001.t:0 "Vanished"
  ssc_events.5001.desc:0 "Your agents drag them into the dark. The dungeon claims another guest."
  ssc_events.5001.a:0 "Bolt the door."
@@ -320,30 +329,26 @@
  ssc_events.5202.t:0 "Smear Failed"
  ssc_events.5202.desc:0 "The whispers died out. They know someone tried."
  ssc_events.5202.a:0 "Annoying."
-
- # M5 / M4b / M6 hub
  ssc_settings.module.verb_pack_2_on:0 "Machinations (Verb Pack 2): On"
  ssc_settings.module.verb_pack_2_off:0 "Machinations (Verb Pack 2): Off"
  ssc_settings.opt.verb_pack_2_on:0 "Toggle Machinations (now On)"
  ssc_settings.opt.verb_pack_2_off:0 "Toggle Machinations (now Off)"
  ssc_settings.tt.verb_pack_2:0 "Shows or hides Abduct, Force Contract, and Smear schemes"
-
- ssc_settings.opt.open_auto_scopes:0 "Auto Hook Scopes…"
+ ssc_settings.opt.open_auto_scopes:0 "Auto Hook Scopesâ€¦"
  ssc_settings.tt.open_auto_scopes:0 "Opt-in silent hooks for courtiers, newly landed barons, and prisoners"
- ssc_settings.opt.open_hook_board:0 "Open Hook Board…"
+ ssc_settings.opt.open_hook_board:0 "Open Hook Boardâ€¦"
  ssc_settings.tt.open_hook_board:0 "Spend strong hooks (or Influence) on contracts, votes, pact approval, factions"
  ssc_settings.opt.back_to_hub:0 "Back to Hub"
  ssc_settings.tt.back_to_hub:0 "Return to the main Supreme Schemes hub"
-
  ssc_settings.1002.t:0 "Auto Hook Scopes"
- ssc_settings.1002.desc_intro:0 "Master Auto Strong Hooks must be On. These scopes are opt-in (default Off). Silent grants only — never the whole county population."
+ ssc_settings.1002.desc_intro:0 "Master Auto Strong Hooks must be On. These scopes are opt-in (default Off). Silent grants only â€” never the whole county population."
  ssc_settings.1002.desc_footer:0 "Courtiers = join-court. Barons = newly landed barony vassals. Prisoners = on imprison (including successful Abduct)."
- ssc_settings.module.auto_courtiers_on:0 "Auto → Courtiers: On"
- ssc_settings.module.auto_courtiers_off:0 "Auto → Courtiers: Off"
- ssc_settings.module.auto_barons_on:0 "Auto → Barons: On"
- ssc_settings.module.auto_barons_off:0 "Auto → Barons: Off"
- ssc_settings.module.auto_prisoners_on:0 "Auto → Prisoners: On"
- ssc_settings.module.auto_prisoners_off:0 "Auto → Prisoners: Off"
+ ssc_settings.module.auto_courtiers_on:0 "Auto â†’ Courtiers: On"
+ ssc_settings.module.auto_courtiers_off:0 "Auto â†’ Courtiers: Off"
+ ssc_settings.module.auto_barons_on:0 "Auto â†’ Barons: On"
+ ssc_settings.module.auto_barons_off:0 "Auto â†’ Barons: Off"
+ ssc_settings.module.auto_prisoners_on:0 "Auto â†’ Prisoners: On"
+ ssc_settings.module.auto_prisoners_off:0 "Auto â†’ Prisoners: Off"
  ssc_settings.opt.auto_courtiers_on:0 "Toggle Courtiers (now On)"
  ssc_settings.opt.auto_courtiers_off:0 "Toggle Courtiers (now Off)"
  ssc_settings.opt.auto_barons_on:0 "Toggle Barons (now On)"
@@ -353,9 +358,8 @@
  ssc_settings.tt.auto_courtiers:0 "Silently hook new courtiers who join your court"
  ssc_settings.tt.auto_barons:0 "Silently hook newly landed barony vassals"
  ssc_settings.tt.auto_prisoners:0 "Silently hook characters you imprison"
-
  ssc_settings.1101.t:0 "Hook Board"
- ssc_settings.1101.desc_intro:0 "Cash strong hooks without leaving Supreme Schemes. Hooks stay here — not in Sovereign. Spend CD clear still refreshes strong hooks after use."
+ ssc_settings.1101.desc_intro:0 "Cash strong hooks without leaving Supreme Schemes. Hooks stay here â€” not in Sovereign. Spend CD clear still refreshes strong hooks after use."
  ssc_settings.1101.desc_verbs:0 "Board: buy Dynasty Pact approvals, silence a hooked faction leader. Character menu: Rewrite Contract, Force Vote, Buy Pact Approval, Silence Faction."
  ssc_settings.1101.desc_influence:0 "If Roads to Power / All Under Heaven and an Influence government are active, spends may use Influence (150) when you lack a usable strong hook."
  ssc_settings.1101.opt.buy_all_pact:0 "Buy All Pact Approvals"
@@ -364,8 +368,6 @@
  ssc_settings.1101.tt.silence_faction:0 "Spend a strong hook on a factioned vassal to pull them (and members) out"
  ssc_settings.1101.opt.hint_interactions:0 "Targeted spends are character interactions"
  ssc_settings.1101.tt.hint_interactions:0 "Open a vassal/dynasty member and use Rewrite Contract / Force Vote / Buy Pact Approval / Silence Faction"
-
- # M6 modifiers / opinions / interactions / toasts
  ssc_he_rewritten_contract_modifier:0 "Rewritten Obligations"
  ssc_he_rewritten_contract_modifier_desc:0 "Hook leverage has rewritten their posture toward the crown."
  ssc_whipped_vote_modifier:0 "Whipped Vote"
@@ -375,7 +377,6 @@
  ssc_he_contract_rewritten_opinion:0 "Rewrote my obligations"
  ssc_he_whipped_vote_opinion:0 "Whipped my vote"
  ssc_he_pact_approval_opinion:0 "Bought my pact approval"
-
  ssc_he_rewrite_contract_interaction:0 "Rewrite Contract"
  ssc_he_rewrite_contract_interaction_desc:0 "Spend a strong hook (or Influence) to shove [recipient.GetShortUIName]'s obligations toward the crown."
  ssc_he_rewrite_contract_interaction_extra_icon:0 "$ssc_he_rewrite_contract_interaction$"
@@ -383,15 +384,13 @@
  ssc_he_force_vote_interaction_desc:0 "Spend a strong hook (or Influence) to whip [recipient.GetShortUIName]'s political voice and pull them from factions."
  ssc_he_force_vote_interaction_extra_icon:0 "$ssc_he_force_vote_interaction$"
  ssc_he_buy_pact_approval_interaction:0 "Buy Pact Approval"
- ssc_he_buy_pact_approval_interaction_desc:0 "Spend a strong hook (or Influence) so [recipient.GetShortUIName] approves your Dynasty Pact (opinion ≥ 25)."
+ ssc_he_buy_pact_approval_interaction_desc:0 "Spend a strong hook (or Influence) so [recipient.GetShortUIName] approves your Dynasty Pact (opinion â‰¥ 25)."
  ssc_he_buy_pact_approval_interaction_extra_icon:0 "$ssc_he_buy_pact_approval_interaction$"
  ssc_he_silence_faction_interaction:0 "Silence Faction"
  ssc_he_silence_faction_interaction_desc:0 "Spend a strong hook (or Influence) so [recipient.GetShortUIName] and their faction members stand down."
  ssc_he_silence_faction_interaction_extra_icon:0 "$ssc_he_silence_faction_interaction$"
-
  ssc_tt_can_use_hook_board:0 "You are a player Supreme Sovereign"
  ssc_tt_can_pay_he_cost:0 "You have a usable strong hook on them, or enough Influence for the alternate cost"
-
  ssc_he_rewrite_contract_toast_title:0 "Contract Rewritten"
  ssc_he_rewrite_contract_toast_tt:0 "Obligations lean toward the crown"
  ssc_he_force_vote_toast_title:0 "Vote Whipped"
@@ -402,8 +401,6 @@
  ssc_he_buy_all_pact_toast_tt:0 "Approvals bought: [ROOT.Var('ssc_he_pact_buy_count').GetValue]"
  ssc_he_silence_faction_toast_title:0 "Faction Silenced"
  ssc_he_silence_faction_toast_tt:0 "Faction heat cooled"
-
- # Hook All Courtiers / Prisoners
  ssc_hook_all_courtiers_decision:0 "Hook All Courtiers"
  ssc_hook_all_courtiers_decision_desc:0 "Secure a strong favor hook on every current courtier you can still hook. One summary toast. No cooldown."
  ssc_hook_all_courtiers_decision_tooltip:0 "Grant strong favor hooks on all hookable courtiers"
@@ -412,7 +409,6 @@
  ssc_tt_has_hookable_courtiers:0 "You have at least one courtier you can still hook"
  ssc_hook_all_courtiers_toast_title:0 "Court Hooks Secured"
  ssc_hook_all_courtiers_toast_tt:0 "Strong favor hooks on courtiers ([ROOT.Var('ssc_hook_all_count').GetValue])"
-
  ssc_hook_all_prisoners_decision:0 "Hook All Prisoners"
  ssc_hook_all_prisoners_decision_desc:0 "Secure a strong favor hook on every current prisoner you can still hook. One summary toast. No cooldown."
  ssc_hook_all_prisoners_decision_tooltip:0 "Grant strong favor hooks on all hookable prisoners"
@@ -421,10 +417,10 @@
  ssc_tt_has_hookable_prisoners:0 "You have at least one prisoner you can still hook"
  ssc_hook_all_prisoners_toast_title:0 "Prison Hooks Secured"
  ssc_hook_all_prisoners_toast_tt:0 "Strong favor hooks on prisoners ([ROOT.Var('ssc_hook_all_count').GetValue])"
-
- # Game rule Verb Pack 2
  rule_ssc_rule_module_verb_pack_2:0 "Supreme Schemes: Machinations (Verb Pack 2)"
  setting_ssc_rule_module_verb_pack_2_on:0 "On"
  setting_ssc_rule_module_verb_pack_2_on_desc:0 "Abduct, Force Contract, and Smear schemes available. Blocks achievements."
  setting_ssc_rule_module_verb_pack_2_off:0 "Off"
  setting_ssc_rule_module_verb_pack_2_off_desc:0 "Verb Pack 2 schemes hidden by default (hub can still enable)."
+ ssc_actions.1001.hook_courtiers:0 "Hook All Courtiers"
+ ssc_actions.1001.hook_prisoners:0 "Hook All Prisoners"

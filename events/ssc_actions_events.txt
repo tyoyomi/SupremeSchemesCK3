@@ -1,0 +1,108 @@
+namespace = ssc_actions
+
+# Supreme Schemes Actions hub â€” Done first (SS/EC craft).
+# Hook All Vassals/Courtiers/Prisoners formerly major decisions.
+# Event options hide when gated (engine has no grey-out for event options).
+
+ssc_actions.1001 = {
+	type = character_event
+	title = ssc_actions.1001.t
+	theme = intrigue
+
+	desc = ssc_actions.1001.desc
+
+	# Done first â€” closes hub
+	option = {
+		name = ssc_actions.1001.close
+		custom_tooltip = ssc_actions.tt.close
+	}
+
+	# Hook All Vassals â€” toast owns next click (do not re-open)
+	option = {
+		name = ssc_actions.1001.hook_vassals
+		trigger = {
+			# Former decision is_shown
+			NOT = { has_game_rule = ssc_rule_granting_disabled }
+			ssc_character_is_supreme_sovereign = yes
+			# Former is_valid
+			custom_tooltip = {
+				text = ssc_tt_actor_may_demand_strong_hook
+				ssc_can_demand_strong_hook_actor = yes
+			}
+			custom_tooltip = {
+				text = ssc_tt_has_hookable_vassals
+				any_vassal = {
+					save_temporary_scope_as = ssc_hook_candidate
+					is_alive = yes
+					NOT = { this = root }
+					root = {
+						can_add_hook = {
+							type = strong_favor_hook
+							target = scope:ssc_hook_candidate
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = ssc_hook_all_vassals_decision_effect_tt
+		ssc_hook_all_direct_vassals_effect = yes
+	}
+
+	# Hook All Courtiers (next-iter; rehomed off Major)
+	option = {
+		name = ssc_actions.1001.hook_courtiers
+		trigger = {
+			NOT = { has_game_rule = ssc_rule_granting_disabled }
+			ssc_character_is_supreme_sovereign = yes
+			custom_tooltip = {
+				text = ssc_tt_actor_may_demand_strong_hook
+				ssc_can_demand_strong_hook_actor = yes
+			}
+			custom_tooltip = {
+				text = ssc_tt_has_hookable_courtiers
+				any_courtier = {
+					save_temporary_scope_as = ssc_hook_candidate
+					is_alive = yes
+					NOT = { this = root }
+					root = {
+						can_add_hook = {
+							type = strong_favor_hook
+							target = scope:ssc_hook_candidate
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = ssc_hook_all_courtiers_decision_effect_tt
+		ssc_hook_all_courtiers_effect = yes
+	}
+
+	# Hook All Prisoners (next-iter; rehomed off Major)
+	option = {
+		name = ssc_actions.1001.hook_prisoners
+		trigger = {
+			NOT = { has_game_rule = ssc_rule_granting_disabled }
+			ssc_character_is_supreme_sovereign = yes
+			custom_tooltip = {
+				text = ssc_tt_actor_may_demand_strong_hook
+				ssc_can_demand_strong_hook_actor = yes
+			}
+			custom_tooltip = {
+				text = ssc_tt_has_hookable_prisoners
+				any_prisoner = {
+					save_temporary_scope_as = ssc_hook_candidate
+					is_alive = yes
+					NOT = { this = root }
+					root = {
+						can_add_hook = {
+							type = strong_favor_hook
+							target = scope:ssc_hook_candidate
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = ssc_hook_all_prisoners_decision_effect_tt
+		ssc_hook_all_prisoners_effect = yes
+	}
+}
