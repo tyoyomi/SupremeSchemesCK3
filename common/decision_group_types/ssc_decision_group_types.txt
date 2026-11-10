@@ -1,0 +1,7 @@
+# Supreme Schemes — custom decision group (additive; does not replace vanilla major)
+
+ssc_schemes = {
+	sort_order = 192
+	gui_tags = { big_button }
+	important_decision_group = yes
+}
