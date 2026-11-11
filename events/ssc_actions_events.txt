@@ -106,20 +106,20 @@ ssc_actions.1001 = {
 		ssc_hook_all_prisoners_effect = yes
 	}
 
-	# Hook All House Members (CM-103; house only, not dynasty)
+	# Hook All Dynasty Members (CM-111; all houses / cadet branches)
 	option = {
-		name = ssc_actions.1001.hook_house_members
+		name = ssc_actions.1001.hook_dynasty_members
 		trigger = {
 			NOT = { has_game_rule = ssc_rule_granting_disabled }
 			ssc_character_is_supreme_sovereign = yes
-			exists = house
+			exists = dynasty
 			custom_tooltip = {
 				text = ssc_tt_actor_may_demand_strong_hook
 				ssc_can_demand_strong_hook_actor = yes
 			}
 			custom_tooltip = {
-				text = ssc_tt_has_hookable_house_members
-				any_house_member = {
+				text = ssc_tt_has_hookable_dynasty_members
+				any_dynasty_member = {
 					save_temporary_scope_as = ssc_hook_candidate
 					is_alive = yes
 					NOT = { this = root }
@@ -132,7 +132,7 @@ ssc_actions.1001 = {
 				}
 			}
 		}
-		custom_tooltip = ssc_hook_all_house_members_decision_effect_tt
-		ssc_hook_all_house_members_effect = yes
+		custom_tooltip = ssc_hook_all_dynasty_members_decision_effect_tt
+		ssc_hook_all_dynasty_members_effect = yes
 	}
 }
