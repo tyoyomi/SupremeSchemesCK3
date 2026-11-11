@@ -1563,13 +1563,13 @@ ssc_hook_all_prisoners_effect = {
 	}
 }
 
-### Hook All House Members — mass silent apply + one summary toast
-# this = player. House members only (not dynasty). No cooldown. Does not require module On.
-ssc_hook_all_house_members_effect = {
+### Hook All Dynasty Members — mass silent apply + one summary toast
+# this = player. Dynasty-wide (all houses / cadet branches). No cooldown. Does not require module On.
+ssc_hook_all_dynasty_members_effect = {
 	save_scope_as = ssc_hook_owner
 	save_scope_value_as = { name = ssc_hook_notify value = no }
 	set_variable = { name = ssc_hook_all_count value = 0 }
-	every_house_member = {
+	every_dynasty_member = {
 		limit = { ssc_can_receive_auto_strong_hook = yes }
 		save_scope_as = ssc_hook_target
 		scope:ssc_hook_owner = {
@@ -1581,9 +1581,9 @@ ssc_hook_all_house_members_effect = {
 		limit = { var:ssc_hook_all_count > 0 }
 		send_interface_toast = {
 			type = event_toast_effect_good
-			title = ssc_hook_all_house_members_toast_title
+			title = ssc_hook_all_dynasty_members_toast_title
 			left_icon = root
-			custom_tooltip = ssc_hook_all_house_members_toast_tt
+			custom_tooltip = ssc_hook_all_dynasty_members_toast_tt
 		}
 	}
 }
